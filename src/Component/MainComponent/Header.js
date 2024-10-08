@@ -5,132 +5,47 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Header.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import Authuser from "./Authuser";
+
 import { Navigate } from "react-router";
 // import { toast } from 'react-toastify';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
+import Register from "./Authentigation/Register";
+import Authuser from "./Authentigation/Authuser";
+import Login from "./Authentigation/Login";
 
 
 const Header = () => {
   const [showCityModal, setShowCityModal] = useState(false);
   const [showAccountModal, setShowAccountModal] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showregisterModal, setShowregisterModal] = useState(false);
-
+  const [showLoginModal, setShowLoginModal] = useState(false); // State for login modal
+  const [showRegisterModal, setShowRegisterModal] = useState(false); // State for register modal
+  
   const handleCloseCity = () => setShowCityModal(false);
   const handleShowCity = () => setShowCityModal(true);
 
   const handleCloseAccount = () => setShowAccountModal(false);
   const handleShowAccount = () => setShowAccountModal(true);
 
+  // Show login modal and hide the account modal
+  const handleShowLogin = () => {
+    setShowLoginModal(true);
+    setShowAccountModal(false);  // Close account modal when opening login
+  };
+
   const handleCloseLogin = () => setShowLoginModal(false);
 
-  // Updated function to close Account modal and open Login modal
-  const handleShowLogin = () => {
-    setShowAccountModal(false); // Close Account modal
-    setShowLoginModal(true); // Open Login modal
+  // Show register modal and hide the account modal
+  const handleShowRegister = () => {
+    setShowRegisterModal(true);
+    setShowAccountModal(false);  // Close account modal when opening register
   };
 
-  const handleCloseregister = () => setShowregisterModal(false);
-
-  // Updated function to close Account modal and open Login modal
-  const handleShowregister = () => {
-    setShowAccountModal(false); // Close Account modal
-    setShowregisterModal(true); // Open Login modal
-  };
+  const handleCloseRegister = () => setShowRegisterModal(false);
 
 
-
-  // Register
-  const { http, token, setToken } = Authuser();
-
-  const [formData, setformData] = useState(
-    {
-        user_Name: '',
-    user_Email: '',
-    user_Password: '',
-    user_phoneno: '',
-    user_pincode: ''
-    
-    }
-);
-// const notify = () => toast("Notification message!");
-console.log(formData)
-const onInputchanges = (e) => {
-    setformData({ ...formData, [e.target.name]: e.target.value });
-
-};
-
-const onSubmit = (e) => {
-  e.preventDefault();
-  
-  fetch('http://localhost:5000/userAPI/register', {
-    method: 'POST',
-    body: JSON.stringify(formData),  // Convert formData to JSON string
-    headers: {
-      'Content-Type': 'application/json',  // Specify content type as JSON
-      // You can add Authorization headers here if needed
-    },
-  })
-  .then((response) => {
-    // Check if the request was successful
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();  // Parse the JSON response
-  })
-  .then((data) => {
-    console.log("User registered successfully!", data);
-    alert("User has registered successfully!");
-  })
-  .catch((error) => {
-    console.error("Error in registration:", error);  // Log the error for debugging
-  });
-};
-
-
-
-
-  // const { http, token, setToken } = Authuser();
-
-  const [Login, SetLogin] = useState({user_Email: '',user_password: '' });
-  const [btnDiseble, setDisebale] = useState(0);
-
-  const notify = () => toast("Notification message!");
-
-
-// Then use it
-toast('Your notification message');
-
-  const OninputChange = (e) => {
-    SetLogin({ ...Login, [e.target.name]: e.target.value });
-  }
-  const onSubmits=(e) => {
-    e.preventDefault();
-   
-  
-      http.post("http://localhost:5000/userAPI/login", Login)
-        .then((res) => {
-          console.log(res.data.user_data);
-          if (res.data.token) {
-            setToken(res.data.user_data, res.data.token);
-            
-            Navigate("/dash");
-          } else {
-            notify (res.data.message);
-            console.log("login",Login);
-            
-          }
-          setDisebale(0);
-        })
-        .catch((error) => {
-          // notify("The provided credentials are invalid");
-          setDisebale(0);
-        });
-  };
-
+ 
 
   return (
     <div>
@@ -274,13 +189,12 @@ toast('Your notification message');
                   </div>
                   <br />
                   <div className="d-flex justify-content-center">
-                    <button
-                      className="form-control sty"
-                      
-                      onClick={handleShowregister}
-                    >
-                      Create New Account
-                    </button>
+                  <button
+        className="form-control sty"
+        onClick={handleShowRegister}  // <-- Updated this line
+      >
+        Create New Account
+      </button>
                   </div>
                 </Modal.Body>
                 <Modal.Footer>
@@ -288,162 +202,22 @@ toast('Your notification message');
                 </Modal.Footer>
               </Modal>
 
-              {/* Login Modal */}
-              <Modal show={showLoginModal} onHide={handleCloseLogin}>
-      <Modal.Header closeButton>
-        <Modal.Title>Log in/Sign Up</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div >
-          <div className="container">
-          <input
-  className="form-control me-2"
-  type="text"
-  placeholder="Phone Number, Email Address"
-// Ensure this is correctly connected to the state
-  name="user_Email"
-  onChange={(e) => OninputChange(e)}// Updates state as the user types
-  
-/>
-
-            <br />
-            <br/>
-            <input
-              className="form-control me-2"
-              type="password"
-              placeholder="Password"
-              name="user_password"
-              // value={userPassword}
-              onChange={(e) => OninputChange(e)}
-              // aria-label="Password"
              
-          
-            />
-            <div className="container mt-2">
-              <span className="psw">
-                Forgot <a href="#">password?</a>
-              </span>
-              <br />
-              <label>
-                <input type="checkbox" name="remember" /> Remember me
-              </label>
-              <br />
-            </div>
-            <Button
-              type="submit"
-              className="form-control mt-3 sty"
-              onClick={(e) => onSubmits(e)}
-            >
-              Login
-            </Button>
-          </div>
-        </div>
-      </Modal.Body>
-    </Modal>
-
-              {/* Register Modal */}
-              <Modal show={showregisterModal} onHide={handleCloseregister}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Please Sign Up</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                <div>
-      <div className="container">
-        <div className="form-group">
-          <input
-            className="form-control"
-            type="text"
-            name="user_name"
-            placeholder="Name"
-            onChange={(e) => onInputchanges(e)}
-            // value={FromData.name}
-            
-          />
-          <br />
-        </div>
-
-        <div className="form-group">
-          <input
-            className="form-control"
-            type="text"
-            name="user_pincode"
-            placeholder="Pin code"
-            onChange={(e) => onInputchanges(e)}
-            
-            
-          />
-          <br />
-        </div>
-
-        {/* Additional input fields like gender, mobile_no, etc. go here */}
-
-        <div className="form-group">
-          <input
-            className="form-control"
-            type="text"
-            name="location"
-            placeholder="Location"
-            onChange={(e) => onInputchanges(e)}
-           
-           
-          />
-          <br />
-        </div>
-
-        <div className="form-group">
-          <input
-            className="form-control"
-            type="text"
-            name="user_Email"
-            placeholder="user_Email"
-            onChange={(e) => onInputchanges(e)}
-            
-            
-          />
-          <br />
-        </div>
-
-        <div className="form-group">
-          <input
-            className="form-control"
-            type="text"
-            name="user_phoneno"
-            placeholder="Phone_number"
-            onChange={(e) => onInputchanges(e)}
-           
-           
-          />
-          <br />
-        </div>
-        <div className="container mt-2">
-      <span className="psw">
-        Forgot <Link to="#">Forgot?</Link>
-      </span>
-      <br />
-      <label>
-        <input type="checkbox" defaultChecked="checked" name="remember" />{" "}
-        Remember me
-      </label>
-      <br />
-    </div>
-        <Button
-          type="submit"
-          className="btn btn-danger form-control sty"
-          onClick={(e) => onSubmit(e)}
-        >
-          Register
-        </Button>
-      </div>
-    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                  {/* <Button variant="secondary" onClick={handleCloseLogin}>Close</Button> */}
-                </Modal.Footer>
-              </Modal>
+             
             </div>
           </div>
         </nav>
+        <Register 
+        showregisterModal={showRegisterModal} 
+        handleCloseregister={handleCloseRegister} 
+      />
+
+<Login
+        showLoginModal={showLoginModal} 
+        handleCloseLogin={handleCloseLogin} 
+      />
       </header>
+
     </div>
   );
 };
