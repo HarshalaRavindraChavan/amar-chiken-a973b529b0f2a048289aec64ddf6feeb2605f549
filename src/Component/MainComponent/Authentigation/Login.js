@@ -1,84 +1,87 @@
-// import React from 'react'
-
 import React, { useState } from "react";
-import { Modal, Button} from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 import Authuser from './Authuser';
 import { Navigate } from "react-router";
-// import { toast } from 'react-toastify';
 import { toast } from 'react-toastify';
 
-const Login = ({showLoginModal, handleCloseLogin}) => {
+const Login = ({ showLoginModal, handleCloseLogin }) => {
+  const { http, token, setToken } = Authuser();
+  const [Login, SetLogin] = useState({ user_Email: '', user_Password: '' });
+  const [btnDiseble, setDisebale] = useState(0);
+  const [buttonResult, setButtonResult] = useState(""); // State for button click result
+  const [error, setError] = useState(null);
 
-    const { http, token, setToken } = Authuser();
+  // Handle input change
+  const handleInputChange = (e) => {
+    SetLogin({
+      ...Login,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-    const [Login, SetLogin] = useState({user_Email: '',user_password: '' });
-    const [btnDiseble, setDisebale] = useState(0);
+  // Handle form submission
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setError(null); // Reset any previous errors
   
-    const notify = () => toast("Notification message!");
+    try {
+      const response = await http.post('http://localhost:5000/userAPI/login', Login, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
   
-  
-  // Then use it
-  toast('Your notification message');
-  
-    const OninputChange = (e) => {
-      SetLogin({ ...Login, [e.target.name]: e.target.value });
+      // Check for success status codes
+      if (response.status === 200 || response.status === 201) {
+         alert('Logged in successfully'); // Change message to 'Logged in' instead of 'Registered'
+      } else {
+        throw new Error(`Unexpected status: ${response.status}`);
+      }
+    } catch (err) {
+      // Handle different types of errors
+      if (err.response) {
+        setError(`Error: ${err.response.status} - ${err.response.data.message}`);
+      } else if (err.request) {
+        setError('Network error. Please check your connection.');
+      } else {
+        setError('Login failed. Please try again.');
+      }
+      console.error('Error:', err);
     }
-    const onSubmits=(e) => {
-      e.preventDefault();
-     
-    
-        http.post("http://localhost:5000/userAPI/login", Login)
-          .then((res) => {
-            console.log(res.data.user_data);
-            if (res.data.token) {
-              setToken(res.data.user_data, res.data.token);
-              
-              Navigate("/dash");
-            } else {
-              notify (res.data.message);
-              console.log("login",Login);
-              
-            }
-            setDisebale(0);
-          })
-          .catch((error) => {
-            // notify("The provided credentials are invalid");
-            setDisebale(0);
-          });
-    };
+  };
   
+  // Define the handleButtonClick function
+  const handleButtonClick = () => {
+    setButtonResult('Button was clicked!');
+  };
+
   return (
     <div>
-         {/* Login Modal */}
-         <Modal show={showLoginModal} onHide={handleCloseLogin}>
-      <Modal.Header closeButton>
-        <Modal.Title>Log in/Sign Up</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div >
+      {/* Login Modal */}
+      <Modal show={showLoginModal} onHide={handleCloseLogin}>
+        <Modal.Header closeButton>
+          <Modal.Title>Log in/Sign Up</Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={handleFormSubmit}>
+        <Modal.Body>
           <div className="container">
-          <input
-  className="form-control me-2"
-  type="text"
-  placeholder="Phone Number, Email Address"
-// Ensure this is correctly connected to the state
-  name="user_Email"
-  onChange={(e) => OninputChange(e)}// Updates state as the user types
-  
-/>
-
+            <input
+              className="form-control me-2"
+              type="text"
+              placeholder="Phone Number, Email Address"
+              name="user_Email"
+              value={Login.user_Email}
+              onChange={handleInputChange} 
+            />
             <br />
-            <br/>
+            <br />
             <input
               className="form-control me-2"
               type="password"
               placeholder="Password"
-              name="user_password"
-              // value={userPassword}
-              onChange={(e) => OninputChange(e)}
-              // aria-label="Password"
-             
-          
+              name="user_Password"
+              value={Login.user_Password}
+              onChange={handleInputChange}
             />
             <div className="container mt-2">
               <span className="psw">
@@ -90,20 +93,26 @@ const Login = ({showLoginModal, handleCloseLogin}) => {
               </label>
               <br />
             </div>
-            <Button
+            <button
               type="submit"
               className="form-control mt-3 sty"
-              onClick={(e) => onSubmits(e)}
             >
               Login
-            </Button>
+            </button>
           </div>
-        </div>
-      </Modal.Body>
-    </Modal>
 
+          {/* Button Click Example */}
+          <div className="container mt-4">
+            <button className="btn btn-primary" onClick={handleButtonClick}>
+              Click Me!
+            </button>
+            <p id="result"></p> {/* Display the button click result */}
+          </div>
+        </Modal.Body>
+        </Form>
+      </Modal>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
