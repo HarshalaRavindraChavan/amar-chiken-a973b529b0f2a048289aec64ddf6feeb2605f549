@@ -19,9 +19,7 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
   // State for error messages
   const [error, setError] = useState(null);
 
-  // Centralized action handlers for input changes and form submission
-
-  // 1. Action: Handling Input Change
+  // Handle input change
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
@@ -29,51 +27,39 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
     });
   };
 
-  // 2. Action: Handle Form Submission
-  const handleFormSubmit = (e) => {
+  // Handle form submission
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     setError(null); // Reset any previous errors
 
-    // Action: Posting the form data to the backend
-    submitRegistrationData(formData);
-  };
-
-  // 3. Action: Submit Data to Backend
-  const submitRegistrationData = (data) => {
-    http.post('http://localhost:5000/userAPI/register',data, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        if (response.status !== 200) {
-          console.log(error);
-          
-          throw new Error('Network response was not ok');
-        }
-        return response.data;
-      })
-      .then((responseData) => {
-        console.log(responseData);
-        alert('Registered successfully');
-      })
-      .catch((error) => {
-        if (error.response) {
-          // Server responded with a status other than 200
-          setError(`Error: ${error.response.status} - ${error.response.data.message}`);
-        } else if (error.request) {
-          // Request was made but no response received
-          setError('Network error. Please check your connection.');
-        } else {
-          // Something else happened
-          console.log(error);
-          
-          setError('Registration failed. Please try again.');
-        }
-        console.error('Error:', error);
+    try {
+      // Await the API response
+      const response = await http.post('http://localhost:5000/userAPI/register', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
+
+      if (response.status === 201) {
+        alert('Registered successfully');
+      } else {
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      }
+    } catch (err) {
+      // Handle different types of errors
+      if (err.response) {
+        // If the error is due to the backend (non-2xx response)
+        setError(`Error: ${err.response.status} - ${err.response.data.message}`);
+      } else if (err.request) {
+        // If the request was made but no response received
+        setError('Network error. Please check your connection.');
+      } else {
+        // For any other error
+        setError('Registration failed. Please try again.');
+      }
+      console.error('Error:', err);
+    }
   };
-  
 
   // Render the component UI
   return (
@@ -81,20 +67,21 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
       <Modal.Header closeButton>
         <Modal.Title>Please Sign Up</Modal.Title>
       </Modal.Header>
-      <Form onSubmit={(e)=>handleFormSubmit(e)} action="#">
+      <Form onSubmit={handleFormSubmit}>
         <Modal.Body>
           <div className="container">
-            {/* Action: Display Error Messages */}
+            {/* Display error messages */}
             {error && <div className="alert alert-danger">{error}</div>}
 
-            {/* Input Fields with Centralized onChange Handler */}
+            {/* Input Fields */}
             <div className="form-group">
               <input
                 className="form-control"
                 type="text"
                 name="user_Name"
                 placeholder="Name"
-                onChange={(e)=>handleInputChange(e)}
+                value={formData.user_Name}
+                onChange={handleInputChange}
               />
               <br />
             </div>
@@ -105,7 +92,8 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
                 type="text"
                 name="user_pincode"
                 placeholder="Pin code"
-                onChange={(e)=>handleInputChange(e)}
+                value={formData.user_pincode}
+                onChange={handleInputChange}
               />
               <br />
             </div>
@@ -116,7 +104,8 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
                 type="text"
                 name="user_location"
                 placeholder="Location"
-                onChange={(e)=>handleInputChange(e)}
+                value={formData.user_location}
+                onChange={handleInputChange}
               />
               <br />
             </div>
@@ -124,10 +113,11 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
             <div className="form-group">
               <input
                 className="form-control"
-                type="text"
+                type="email"
                 name="user_Email"
                 placeholder="Email"
-                onChange={(e)=>handleInputChange(e)}
+                value={formData.user_Email}
+                onChange={handleInputChange}
               />
               <br />
             </div>
@@ -138,7 +128,8 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
                 type="password"
                 name="user_Password"
                 placeholder="Password"
-                onChange={(e)=>handleInputChange(e)}
+                value={formData.user_Password}
+                onChange={handleInputChange}
               />
               <br />
             </div>
@@ -149,7 +140,8 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
                 type="text"
                 name="user_phoneno"
                 placeholder="Phone number"
-                onChange={(e)=>handleInputChange(e)}
+                value={formData.user_phoneno}
+                onChange={handleInputChange}
               />
               <br />
             </div>
@@ -166,7 +158,7 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
               <br />
             </div>
 
-            {/* Action: Submit Button */}
+            {/* Submit Button */}
             <button type="submit" className="btn btn-danger form-control">
               Register
             </button>
