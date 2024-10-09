@@ -40,13 +40,15 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
 
   // 3. Action: Submit Data to Backend
   const submitRegistrationData = (data) => {
-    http.post('http://localhost:5000/userAPI/register', data, {
+    http.post('http://localhost:5000/userAPI/register',data, {
       headers: {
         'Content-Type': 'application/json',
       },
     })
       .then((response) => {
         if (response.status !== 200) {
+          console.log(error);
+          
           throw new Error('Network response was not ok');
         }
         return response.data;
@@ -64,6 +66,8 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
           setError('Network error. Please check your connection.');
         } else {
           // Something else happened
+          console.log(error);
+          
           setError('Registration failed. Please try again.');
         }
         console.error('Error:', error);
@@ -77,7 +81,7 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
       <Modal.Header closeButton>
         <Modal.Title>Please Sign Up</Modal.Title>
       </Modal.Header>
-      <Form onSubmit={handleFormSubmit} action="#">
+      <Form onSubmit={(e)=>handleFormSubmit(e)} action="#">
         <Modal.Body>
           <div className="container">
             {/* Action: Display Error Messages */}
@@ -90,7 +94,7 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
                 type="text"
                 name="user_Name"
                 placeholder="Name"
-                onChange={handleInputChange}
+                onChange={(e)=>handleInputChange(e)}
               />
               <br />
             </div>
@@ -101,7 +105,7 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
                 type="text"
                 name="user_pincode"
                 placeholder="Pin code"
-                onChange={handleInputChange}
+                onChange={(e)=>handleInputChange(e)}
               />
               <br />
             </div>
@@ -112,7 +116,7 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
                 type="text"
                 name="user_location"
                 placeholder="Location"
-                onChange={handleInputChange}
+                onChange={(e)=>handleInputChange(e)}
               />
               <br />
             </div>
@@ -123,7 +127,7 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
                 type="text"
                 name="user_Email"
                 placeholder="Email"
-                onChange={handleInputChange}
+                onChange={(e)=>handleInputChange(e)}
               />
               <br />
             </div>
@@ -134,7 +138,7 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
                 type="password"
                 name="user_Password"
                 placeholder="Password"
-                onChange={handleInputChange}
+                onChange={(e)=>handleInputChange(e)}
               />
               <br />
             </div>
@@ -145,7 +149,7 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
                 type="text"
                 name="user_phoneno"
                 placeholder="Phone number"
-                onChange={handleInputChange}
+                onChange={(e)=>handleInputChange(e)}
               />
               <br />
             </div>
