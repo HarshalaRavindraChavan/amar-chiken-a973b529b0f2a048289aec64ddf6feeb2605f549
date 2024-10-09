@@ -19,30 +19,30 @@ import Login from "./Authentigation/Login";
 const Header = () => {
   const [showCityModal, setShowCityModal] = useState(false);
   const [showAccountModal, setShowAccountModal] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false); // State for login modal
-  const [showRegisterModal, setShowRegisterModal] = useState(false); // State for register modal
-  
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
   const handleCloseCity = () => setShowCityModal(false);
   const handleShowCity = () => setShowCityModal(true);
 
   const handleCloseAccount = () => setShowAccountModal(false);
   const handleShowAccount = () => setShowAccountModal(true);
 
-  // Show login modal and hide the account modal
-  const handleShowLogin = () => {
-    setShowLoginModal(true);
-    setShowAccountModal(false);  // Close account modal when opening login
-  };
+ 
 
-  const handleCloseLogin = () => setShowLoginModal(false);
+  
 
-  // Show register modal and hide the account modal
-  const handleShowRegister = () => {
-    setShowRegisterModal(true);
-    setShowAccountModal(false);  // Close account modal when opening register
-  };
+  const handleShowRegister = () => setShowRegisterModal(true);
 
+  // Function to close the modal by setting state to false
   const handleCloseRegister = () => setShowRegisterModal(false);
+
+
+  const handleShowLogin = () => setShowLoginModal(true);
+
+  // Function to close the modal by setting state to false
+  const handleCloseLogin = () => setShowLoginModal(false);
+  
+
 
 
  
