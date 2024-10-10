@@ -94,7 +94,7 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
                       type="text"
                       placeholder="Phone Number"
                       name="user_Email"
-                      value={Login.user_phoneno}
+                      // value={Login.user_phoneno}
                       onChange={handleInputChange}
                   />
                   <br />
