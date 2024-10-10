@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import Authuser from './Authuser';
-import { Navigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { toast } from 'react-toastify';
+import './Register.css';
+import { Link } from "react-router-dom";
+import Register from "./Register";
 
 const Login = ({ showLoginModal, handleCloseLogin }) => {
   const { http, token, setToken } = Authuser();
-  const [Login, SetLogin] = useState({ user_Email: '', user_Password: '' });
-  const [btnDiseble, setDisebale] = useState(0);
-  const [buttonResult, setButtonResult] = useState(""); // State for button click result
+  const [Login, SetLogin] = useState({  user_phoneno: '', user_Password: '' });
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); 
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
+
+  const handleCloseRegister = () => setShowRegisterModal(false);
+
+  const handleShowRegister = () => {
+    setShowRegisterModal(true);
+    handleCloseLogin(); // Close the login modal
+  };
 
   // Handle input change
   const handleInputChange = (e) => {
@@ -23,17 +33,18 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     setError(null); // Reset any previous errors
-  
+
     try {
       const response = await http.post('http://localhost:5000/userAPI/login', Login, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-  
+
       // Check for success status codes
       if (response.status === 200 || response.status === 201) {
-         alert('Logged in successfully'); // Change message to 'Logged in' instead of 'Registered'
+        alert('Logged in successfully');
+        navigate('/dash'); // Use navigate to go to the dashboard
       } else {
         throw new Error(`Unexpected status: ${response.status}`);
       }
@@ -49,68 +60,75 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
       console.error('Error:', err);
     }
   };
-  
-  // Define the handleButtonClick function
-  const handleButtonClick = () => {
-    setButtonResult('Button was clicked!');
-  };
 
   return (
     <div>
       {/* Login Modal */}
-      <Modal show={showLoginModal} onHide={handleCloseLogin}>
-        <Modal.Header closeButton>
-          <Modal.Title>Log in/Sign Up</Modal.Title>
-        </Modal.Header>
-        <Form onSubmit={handleFormSubmit}>
-        <Modal.Body>
-          <div className="container">
-            <input
-              className="form-control me-2"
-              type="text"
-              placeholder="Phone Number, Email Address"
-              name="user_Email"
-              value={Login.user_Email}
-              onChange={handleInputChange} 
-            />
-            <br />
-            <br />
-            <input
-              className="form-control me-2"
-              type="password"
-              placeholder="Password"
-              name="user_Password"
-              value={Login.user_Password}
-              onChange={handleInputChange}
-            />
-            <div className="container mt-2">
-              <span className="psw">
-                Forgot <a href="#">password?</a>
-              </span>
-              <br />
-              <label>
-                <input type="checkbox" name="remember" /> Remember me
-              </label>
-              <br />
-            </div>
-            <button
-              type="submit"
-              className="form-control mt-3 sty"
-            >
-              Login
-            </button>
-          </div>
+      <Modal
+          show={showLoginModal}
+          onHide={handleCloseLogin}
+          dialogClassName="custom-modal-right"
+      >
+          <Modal.Header className="d-flex justify-content-between align-items-center">
+              <button
+                  type="button"
+                  className="btn-close"
+                  aria-label="Close"
+                  onClick={handleCloseLogin}
+              ></button>
 
-          {/* Button Click Example */}
-          <div className="container mt-4">
-            <button className="btn btn-primary" onClick={handleButtonClick}>
-              Click Me!
-            </button>
-            <p id="result"></p> {/* Display the button click result */}
-          </div>
-        </Modal.Body>
-        </Form>
+              {/* Modal title centered */}
+              <Modal.Title className="mx-auto"></Modal.Title>
+          </Modal.Header>
+          
+          <Form onSubmit={handleFormSubmit}>
+              <Modal.Body>
+              <div>
+                  <span className="text-black">or </span>
+                  <span onClick={handleShowRegister} className="text-red" style={{ cursor: "pointer" }}>Create an account</span>
+              </div>
+              <br />
+              <div className="container">
+                  <input
+                      className="form-control me-2"
+                      type="text"
+                      placeholder="Phone Number"
+                      name="user_Email"
+                      value={Login.user_phoneno}
+                      onChange={handleInputChange}
+                  />
+                  <br />
+                  {/* <input
+                      className="form-control me-2"
+                      type="password"
+                      placeholder="Password"
+                      name="user_Password"
+                      value={Login.user_Password}
+                      onChange={handleInputChange}
+                  />
+                  <br /> */}
+                  {/* Custom styled button */}
+                  <div className="container mt-2">
+                      <button
+                          type="submit"
+                          className="custom-login-btn mt-3"
+                      >
+                          Login
+                      </button>
+                  </div>
+              </div>
+
+              {/* Optional additional button or content */}
+              <div className="container mt-4">
+                  <p id="result"></p> {/* Display the button click result */}
+              </div>
+              </Modal.Body>
+          </Form>
       </Modal>
+      <Register 
+          showregisterModal={showRegisterModal} 
+          handleCloseregister={handleCloseRegister} 
+      />
     </div>
   );
 };

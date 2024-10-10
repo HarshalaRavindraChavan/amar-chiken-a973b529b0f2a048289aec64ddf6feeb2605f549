@@ -6,43 +6,38 @@ import "./Header.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-import { Navigate } from "react-router";
-// import { toast } from 'react-toastify';
-import { toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
 import Register from "./Authentigation/Register";
-import Authuser from "./Authentigation/Authuser";
+
 import Login from "./Authentigation/Login";
 
 
 const Header = () => {
   const [showCityModal, setShowCityModal] = useState(false);
-  const [showAccountModal, setShowAccountModal] = useState(false);
+
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showRegisterModal, setShowRegisterModal] = useState(false);
+ 
+  
   const handleCloseCity = () => setShowCityModal(false);
   const handleShowCity = () => setShowCityModal(true);
-
-  const handleCloseAccount = () => setShowAccountModal(false);
-  const handleShowAccount = () => setShowAccountModal(true);
-
+  
  
 
+ 
   
+  // Function to close the register modal by setting state to false
 
-  const handleShowRegister = () => setShowRegisterModal(true);
-
-  // Function to close the modal by setting state to false
-  const handleCloseRegister = () => setShowRegisterModal(false);
-
-
-  const handleShowLogin = () => setShowLoginModal(true);
-
-  // Function to close the modal by setting state to false
+  
+  const handleShowLogin = () => {
+    setShowLoginModal(true);  // Open the login modal
+   // Close the account modal
+  };
+  
+  // Function to close the login modal by setting state to false
   const handleCloseLogin = () => setShowLoginModal(false);
   
-
 
 
  
@@ -166,14 +161,14 @@ const Header = () => {
                 {/* My Account Button with custom class */}
                 <button
                   className="btn btn-outline-danger d-flex align-items-center custom-width"
-                  onClick={handleShowAccount}
+                  onClick={handleShowLogin}
                 >
-                  <i className="fa-solid fa-user me-1"></i> My Account
+                  <i className="fa-solid fa-user me-1"></i> Sign In
                 </button>
               </div>
 
               {/* Account Modal */}
-              <Modal show={showAccountModal} onHide={handleCloseAccount}>
+              {/* <Modal show={showAccountModal} onHide={handleCloseAccount}>
                 <Modal.Header closeButton>
                   <Modal.Title>Log In/Sign Up</Modal.Title>
                 </Modal.Header>
@@ -199,18 +194,15 @@ const Header = () => {
                 </Modal.Body>
                 <Modal.Footer>
                   {/* <Button variant="secondary" onClick={handleCloseAccount}>Close</Button> */}
-                </Modal.Footer>
-              </Modal>
+                {/* </Modal.Footer> */}
+              {/* </Modal>  */}
 
              
              
             </div>
           </div>
         </nav>
-        <Register 
-        showregisterModal={showRegisterModal} 
-        handleCloseregister={handleCloseRegister} 
-      />
+        
 
 <Login
         showLoginModal={showLoginModal} 

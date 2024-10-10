@@ -2,31 +2,43 @@ import React, { useState } from 'react';
 import { Modal, Button, Form, Toast } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Authuser from './Authuser';
+import './Register.css';
 
 const Register = ({ showregisterModal, handleCloseregister }) => {
   const { http } = Authuser();
 
-  // State to hold form data
-  const [formData, setFormData] = useState({
+  // Initial state for form data
+  const initialFormData = {
     user_Name: '',
     user_Email: '',
     user_location: '',
     user_Password: '',
     user_phoneno: '',
     user_pincode: ''
-  });
+  };
+
+  // State to hold form data
+  const [formData, setFormData] = useState(initialFormData);
 
   // State for error messages
   const [error, setError] = useState(null);
   // State for toast notifications
   const [showToast, setShowToast] = useState(false);
-  
+  // State for OTP verification
+  const [isOtpVisible, setIsOtpVisible] = useState(false);
+  const [otp, setOtp] = useState('');
+
   // Handle input change
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  // Handle OTP input change
+  const handleOtpChange = (e) => {
+    setOtp(e.target.value);
   };
 
   // Handle form submission
@@ -44,6 +56,13 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
 
       if (response.status === 201) {
         setShowToast(true); // Show success toast
+        // After successful registration, show OTP input
+        setIsOtpVisible(true);
+        alert('Registered successfully. Please verify your mobile number.');
+
+        // Clear the form data
+        setFormData(initialFormData); // Reset form fields
+        setOtp(''); // Reset OTP input
       } else {
         throw new Error(`Error: ${response.status} - ${response.statusText}`);
       }
@@ -60,20 +79,63 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
     }
   };
 
+  // Handle OTP verification (dummy function)
+  const handleOtpVerify = () => {
+    if (otp) {
+      alert('OTP verified successfully!');
+      // Add logic to verify OTP here (API call, etc.)
+    } else {
+      setError('Please enter a valid OTP.');
+    }
+  };
+
   // Render the component UI
   return (
     <>
-      <Modal show={showregisterModal} onHide={handleCloseregister}>
-        <Modal.Header closeButton>
-          <Modal.Title>Please Sign Up</Modal.Title>
+      <Modal
+        show={showregisterModal}
+        onHide={handleCloseregister}
+        dialogClassName="custom-modal-right"
+      >
+        <Modal.Header className="d-flex justify-content-between align-items-center">
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            onClick={handleCloseregister}
+          ></button>
+
+          <Modal.Title className="mx-auto">Please Sign Up</Modal.Title>
         </Modal.Header>
+
         <Form onSubmit={handleFormSubmit}>
           <Modal.Body>
             <div className="container">
-              {/* Display error messages */}
               {error && <div className="alert alert-danger">{error}</div>}
+              {showToast && (
+                <Toast
+                  onClose={() => setShowToast(false)}
+                  show={showToast}
+                  delay={3000}
+                  autohide
+                >
+                  <Toast.Body>Registered successfully!</Toast.Body>
+                </Toast>
+              )}
 
               {/* Input Fields */}
+              <div className="form-group">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="user_phoneno"
+                  placeholder="Phone number"
+                  value={formData.user_phoneno}
+                  onChange={handleInputChange}
+                />
+                <br />
+              </div>
+              
               <div className="form-group">
                 <input
                   className="form-control"
@@ -90,15 +152,27 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
                 <input
                   className="form-control"
                   type="text"
+                  name="user_Email"
+                  placeholder="Email"
+                  value={formData.user_Email}
+                  onChange={handleInputChange}
+                />
+                <br />
+              </div>
+
+              {/* <div className="form-group">
+                <input
+                  className="form-control"
+                  type="text"
                   name="user_pincode"
                   placeholder="Pin code"
                   value={formData.user_pincode}
                   onChange={handleInputChange}
                 />
                 <br />
-              </div>
-
-              <div className="form-group">
+              </div> */}
+              
+              {/* <div className="form-group">
                 <input
                   className="form-control"
                   type="text"
@@ -108,69 +182,36 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
                   onChange={handleInputChange}
                 />
                 <br />
-              </div>
-
-              <div className="form-group">
-                <input
-                  className="form-control"
-                  type="email"
-                  name="user_Email"
-                  placeholder="Email"
-                  value={formData.user_Email}
-                  onChange={handleInputChange}
-                />
-                <br />
-              </div>
-
-              <div className="form-group">
-                <input
-                  className="form-control"
-                  type="password"
-                  name="user_Password"
-                  placeholder="Password"
-                  value={formData.user_Password}
-                  onChange={handleInputChange}
-                />
-                <br />
-              </div>
-
-              <div className="form-group">
-                <input
-                  className="form-control"
-                  type="text"
-                  name="user_phoneno"
-                  placeholder="Phone number"
-                  value={formData.user_phoneno}
-                  onChange={handleInputChange}
-                />
-                <br />
-              </div>
-
-              {/* Additional Information */}
-              <div className="container mt-2">
-                <span className="psw">
-                  Forgot <Link to="#">Forgot?</Link>
-                </span>
-                <br />
-                <label>
-                  <input type="checkbox" name="remember" /> Remember me
-                </label>
-                <br />
-              </div>
+              </div> */}
 
               {/* Submit Button */}
-              <button type="submit" className="btn btn-danger form-control">
+              <button type="submit" className="custom-register-btn mt-3">
                 Register
               </button>
+
+              {/* OTP Verification */}
+              {isOtpVisible && (
+                <div className="mt-4">
+                  <input
+                    className="form-control"
+                    type="text"
+                    placeholder="Enter OTP"
+                    value={otp}
+                    onChange={handleOtpChange}
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-primary mt-2"
+                    onClick={handleOtpVerify}
+                  >
+                    Verify OTP
+                  </button>
+                </div>
+              )}
             </div>
           </Modal.Body>
         </Form>
       </Modal>
-
-      {/* Toast Notification */}
-      <Toast onClose={() => setShowToast(false)} show={showToast} delay={3000} autohide>
-        <Toast.Body>Registered successfully!</Toast.Body>
-      </Toast>
     </>
   );
 };

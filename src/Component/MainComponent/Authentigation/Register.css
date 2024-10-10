@@ -1,0 +1,59 @@
+.custom-modal-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 0;
+    height: 100vh;
+    width: 90%; /* Adjust width as per your needs */
+    max-width: 500px;
+  }
+  
+  .custom-modal-right .modal-content {
+    height: 100%;
+    border-radius: 0;
+    overflow-y: auto;
+  }
+  
+  .custom-login-btn {
+    width: 100%; /* Full width button */
+    height: 50px; /* Set button height */
+    background-color: #92071e; /* Set the button background color (Bootstrap's primary color) */
+    color: white; /* Set the text color to white */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add rounded corners */
+    font-size: 16px; /* Set font size */
+    font-weight: bold; /* Make the text bold */
+    cursor: pointer; /* Change cursor to pointer */
+    border-radius: 20px;
+}
+
+.custom-register-btn {
+    width: 100%; /* Full width button */
+    height: 50px; /* Set button height */
+    background-color: #92071e; /* Set the button background color (Bootstrap's primary color) */
+    color: white; /* Set the text color to white */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add rounded corners */
+    font-size: 16px; /* Set font size */
+    font-weight: bold; /* Make the text bold */
+    cursor: pointer; /* Change cursor to pointer */
+    border-radius: 20px;
+}
+
+.custom-login-btn:hover {
+    background-color: #92071e; /* Darken the background color on hover */
+}
+.text-black {
+    color: black;
+}
+
+.text-red {
+    color:#92071e;
+}
+
+
+
+  
+ 
+  
+  
