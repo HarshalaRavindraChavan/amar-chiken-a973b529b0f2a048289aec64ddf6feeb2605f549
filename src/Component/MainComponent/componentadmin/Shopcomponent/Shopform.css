@@ -43,7 +43,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     align-items: center;
-    margin-left: 190px;
+    margin-left: 20%;
   }
   
   .submit-button:hover {
