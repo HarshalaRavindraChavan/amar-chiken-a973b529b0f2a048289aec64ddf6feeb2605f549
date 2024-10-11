@@ -7,6 +7,7 @@ import ListAltIcon from '@mui/icons-material/ListAlt';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import { Link } from 'react-router-dom';
 
 
 const drawerWidth = 240;
@@ -70,6 +71,13 @@ const Sidebar = () => {
       <AddShoppingCartIcon />
     </ListItemIcon>
     <ListItemText primary="Add Product" />
+  </ListItem>
+
+  <ListItem button>
+    <ListItemIcon>
+      <AddShoppingCartIcon />
+    </ListItemIcon>
+    <Link to='/shopform'><ListItemText primary="Add TO Shop" /> </Link>
   </ListItem>
 </List>
 

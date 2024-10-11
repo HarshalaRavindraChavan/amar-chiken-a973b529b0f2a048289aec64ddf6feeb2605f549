@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import { Typography, Grid, Paper } from '@mui/material';
 import { Grid, Paper, Typography } from '@mui/material';
 import {
@@ -7,9 +7,17 @@ import {
   Settings as SettingsIcon,
   Info as InfoIcon,
 } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import ShopForm from '../Shopcomponent/Shopform';
 
 
 const Content = () => {
+
+  const [open, setOpen] = useState(false); // State to control the modal
+
+  const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpen(true);
     return (
         <>
        
@@ -95,10 +103,21 @@ const Content = () => {
           </div>
         </Paper>
       </Grid>
-     
-    </Grid>
+
+      <Grid item xs={12} sm={6} md={3}>
+        <Paper sx={{ padding: 3, display: 'flex', alignItems: 'center', bgcolor: '#f5f5f5', borderRadius: 2 }}>
+          <AccountCircleIcon sx={{ fontSize: 40, color: ' #851919', marginRight: 2 }} />
+          <div>
+           <Link to='/shopform'> <Typography variant="h6"><h5>Add To Shop</h5></Typography></Link>
+            <Typography variant="body2">Manage your add product.</Typography>
           </div>
-         
+        </Paper>
+      </Grid>
+        </Grid>
+     
+    {/* </Grid> */}
+          </div>
+          {/* <ShopForm show={open} handleClose={handleClose} /> */}
         </>
       );
     }      

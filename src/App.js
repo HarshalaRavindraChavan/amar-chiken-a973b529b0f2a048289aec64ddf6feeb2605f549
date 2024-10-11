@@ -5,6 +5,8 @@ import Home from './Component/MainComponent/Home';
 import Product from './Component/MainComponent/Product';
 import Dashboard from './Component/MainComponent/Dashboard';
 import Allcontent from './Component/MainComponent/componentadmin/Sidebar.js/Allcontent';
+import Shoplist from './Component/MainComponent/Shoplist';
+import Shopform from './Component/MainComponent/componentadmin/Shopcomponent/Shopform';
 // import verticaleNavbar from './Component/MainComponent/componentadmin/verticaleNavbar';
 // import DashApp from './Component/Admincomponent/DashApp';
 
@@ -17,7 +19,8 @@ function App() {
         <Route path='/product' element={<Master Rcf={Product}/>}/>
         <Route path='/dashboard' element={<Master Rcf={Dashboard}/>}/>
         <Route path='/dash' element={<Allcontent />}/>
-
+        <Route path='/shop/:shopName' element={<Master Rcf={Shoplist}/>}/>
+<Route path='/shopform' element={<Master Rcf={Shopform}/>}/>
         {/* <Route path='/dash' element={<Master Rcf={verticaleNavbar}/>}/> */}
         {/* <Route path='/dashboards' element={<DashApp/>}></Route> */}
         

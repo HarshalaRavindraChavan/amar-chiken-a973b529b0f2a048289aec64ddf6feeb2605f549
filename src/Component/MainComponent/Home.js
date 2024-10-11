@@ -57,97 +57,137 @@ const Home = () => {
 
   const shopsData = [
     {
-        img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid", // Use the direct image URL
-        name: "Shop 1",
-        rating: 4,
-      },
-    {
       img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
-      name: "Shop 2",
-      rating: 5,
+      name: "Balaji Chicken",
+      rating: 4.7,
+      address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
+      pincode: "ZB53S7H",
+      availability: { serviceAvailable: true, serviceNotAvailable: false },
+      reviews: 31
     },
     {
       img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
-      name: "Shop 3",
-      rating: 3,
+      name: "Balaji Chicken",
+      rating: 4.7,
+      address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
+      pincode: "ZB53S7H",
+      availability: { serviceAvailable: true, serviceNotAvailable: false },
+      reviews: 31
     },
     {
       img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
-      name: "Shop 4",
-      rating: 4,
+      name: "Balaji Chicken",
+      rating: 4.7,
+      address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
+      pincode: "ZB53S7H",
+      availability: { serviceAvailable: true, serviceNotAvailable: false },
+      reviews: 31
     },
     {
       img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
-      name: "Shop 5",
-      rating: 5,
+      name: "Balaji Chicken",
+      rating: 4.7,
+      address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
+      pincode: "ZB53S7H",
+      availability: { serviceAvailable: true, serviceNotAvailable: false },
+      reviews: 31
     },
     {
       img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
-      name: "Shop 6",
-      rating: 4,
+      name: "Balaji Chicken",
+      rating: 4.7,
+      address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
+      pincode: "ZB53S7H",
+      availability: { serviceAvailable: true, serviceNotAvailable: false },
+      reviews: 31
     },
     {
       img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
-      name: "Shop 7",
-      rating: 3,
+      name: "Balaji Chicken",
+      rating: 4.7,
+      address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
+      pincode: "ZB53S7H",
+      availability: { serviceAvailable: true, serviceNotAvailable: false },
+      reviews: 31
     },
     {
       img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
-      name: "Shop 8",
-      rating: 5,
+      name: "Balaji Chicken",
+      rating: 4.7,
+      address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
+      pincode: "ZB53S7H",
+      availability: { serviceAvailable: true, serviceNotAvailable: false },
+      reviews: 31
     },
+    {
+      img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
+      name: "Balaji Chicken",
+      rating: 4.7,
+      address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
+      pincode: "ZB53S7H",
+      availability: { serviceAvailable: true, serviceNotAvailable: false },
+      reviews: 31
+    },
+    // Add other shops if necessary
   ];
   return (
     <div>
       <div className="container mt-5">
         <h2 className="text-center" style={{ color: "#9A292F" }}>
-          Order Fresh Chicken & Egg Online In Your City{" "}
+          Order Fresh Chicken & Egg Online In Your City
         </h2>
         <Slider {...settings}>
-          {/* <h1>sfgbfnvkmc</h1> */}
           {slidesData.map((slide, index) => (
             <div key={index} className="slide-item text-center">
-              {/* Circular Image */}
               <img
                 src={slide.img}
                 alt={slide.title}
                 className="circular-image"
               />
-              {/* Content Below Image */}
               <h5 className="mt-3">{slide.title}</h5>
               <p>{slide.description}</p>
             </div>
           ))}
         </Slider>
       </div>
-
       <div className="container mt-5">
-      <Link to="/dash" > <h2 className="text-center" style={{ color: "#9A292F" }}> 
-          Shops To Explore
-        </h2></Link>
-        <div className="row">
-          {shopsData.map((shop, index) => (
-            <div className="col-md-3 mb-4" key={index}>
-              <div className="card shop-card shadow">
-                <img src={shop.img} alt={shop.name} className="card-img-top" />
-                <div className="card-body text-center">
-                  <h5 className="card-title">{shop.name}</h5>
-                  <div className="rating">
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <i
-                        key={i}
-                        className={`fas fa-star ${
-                          i < shop.rating ? "text-warning" : "text-secondary"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </div>
+  <Link to="/dash">
+    <h2 className="text-center" style={{ color: "#9A292F" }}>
+      Shops To Explore / Admin / Shop Admin
+    </h2>
+  </Link>
+  <div className="row">
+    {shopsData.map((shop, index) => (
+      <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={index}>
+        <Link to={`/shop/${shop.name}`}>
+          <div className="card shop-card shadow position-relative">
+            <img
+              src={shop.img}
+              alt={shop.name}
+              className="card-img-top"
+            />
+            <div className="card-body text-center">
+              <h5 className="card-title">{shop.name}</h5>
+              <div className="rating">
+                {Array.from({ length: 5 }, (_, i) => (
+                  <i
+                    key={i}
+                    className={`fas fa-star ${
+                      i < shop.rating ? "text-gold" : "text-secondary"
+                    }`}
+                  />
+                ))}
               </div>
+              <p className="price">${shop.price}</p> {/* Display the price */}
             </div>
-          ))}
-        </div>
+          </div>
+        </Link>
       </div>
+    ))}
+  </div>
+</div>
+
+
     </div>
   );
 };

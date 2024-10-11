@@ -78,7 +78,7 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
               ></button>
 
               {/* Modal title centered */}
-              <Modal.Title className="mx-auto"></Modal.Title>
+              <Modal.Title className="mx-auto"> Login</Modal.Title>
           </Modal.Header>
           
           <Form onSubmit={handleFormSubmit}>

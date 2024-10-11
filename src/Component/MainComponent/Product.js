@@ -55,7 +55,7 @@ const Product = () => {
     <div>
     <div className="container mt-5">
     <h2 className="text-center" style={{ color: "#9A292F" }}>
-          Order Fresh Chicken & Egg Online In Your City{" "}
+         Products{" "}
         </h2><br/>
       <div className="row justify-content-center">
         {shopsData.map((shop, index) => (
