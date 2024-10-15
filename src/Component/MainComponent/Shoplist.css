@@ -150,3 +150,112 @@
     }
   }
   
+
+
+  /* orders */
+
+
+  .shop-container {
+    /* border: 1px solid #e0e0e0; */
+    /* border-radius: 10px; */
+    padding: 20px;
+    background-color: #fff;
+    /* max-width: 900px; */
+    margin: 0 auto;
+  } 
+  
+  .shop-header {
+    display: flex;
+    align-items: center;
+  }
+  
+  .shop-img {
+    width: 250px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* margin-right: 100%; */
+  }
+  
+  .shop-info {
+    flex: 1;
+    /* margin-right: 10%; */
+  }
+  
+  .shop-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  
+  .product-price {
+    font-size: 1.2rem;
+  }
+  
+  .place-order-btn {
+    background-color: #d9534f;
+    border-color: #d9534f;
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+  
+  .place-order-btn:hover {
+    background-color: #c9302c;
+    border-color: #ac2925;
+  }
+  
+
+
+  /* ORDER BILL CARD */
+
+
+  .small-bill-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  
+  .small-bill-card h4 {
+    font-size: 18px;
+    color: #5a2d2d;
+    margin-bottom: 10px;
+  }
+  
+  .small-bill-card .summary-details p {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+  
+  .small-bill-card .payment-options {
+    margin-top: 15px;
+  }
+  
+  .small-bill-card .payment-method p {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .small-bill-card .pay-btn {
+    width: 100%;
+    background-color: #d9534f;
+    border: none;
+    padding: 10px;
+    color: white;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .small-bill-card .cod-btn {
+    width: 100%;
+    background-color: #6c757d;
+    border: none;
+    padding: 10px;
+    color: white;
+    font-size: 16px;
+    margin-top: 5px;
+  }
+  

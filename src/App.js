@@ -7,6 +7,9 @@ import Dashboard from './Component/MainComponent/Dashboard';
 import Allcontent from './Component/MainComponent/componentadmin/Sidebar.js/Allcontent';
 import Shoplist from './Component/MainComponent/Shoplist';
 import Shopform from './Component/MainComponent/componentadmin/Shopcomponent/Shopform';
+import Shoporder from './Component/MainComponent/Shopordercomponent/Shoporder';
+import ShopTable from './Component/MainComponent/componentadmin/Shopcomponent/ShopTable';
+// import Shoporder from './Component/MainComponent/Shopordercomponent/Shoporder';
 // import verticaleNavbar from './Component/MainComponent/componentadmin/verticaleNavbar';
 // import DashApp from './Component/Admincomponent/DashApp';
 
@@ -23,7 +26,9 @@ function App() {
 <Route path='/shopform' element={<Master Rcf={Shopform}/>}/>
         {/* <Route path='/dash' element={<Master Rcf={verticaleNavbar}/>}/> */}
         {/* <Route path='/dashboards' element={<DashApp/>}></Route> */}
-        
+        {/* <Route path="/shop/:shopName" element={<Master Rcf={Shoporder}/>} /> */}
+        <Route path="/product/:productName" element={<Master Rcf={Shoporder}/>} />
+        <Route path='/shoptale' element={<Master Rcf={ShopTable}/>}/>
       </Routes>
       </BrowserRouter>
     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Shoplist.css'; // Import the CSS for styling
 
 const shopsData = [
@@ -10,18 +10,29 @@ const shopsData = [
     address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
     pincode: "ZB53S7H",
     availability: { serviceAvailable: true, serviceNotAvailable: false },
-    reviews: 31
+    reviews: 31,
+    products: [
+      { name: 'Egg', price: '100 / 10 p', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpQADIrYbC5agt9OFuvI5I5hieNxIJAEcQHQ&s' },
+      { name: 'Chicken', price: '144 / 500gm', img: 'https://www.shutterstock.com/image-photo/fresh-raw-chicken-basil-isolated-260nw-1064429528.jpg' },
+      { name: 'Chicken Wing', price: '144 / 500gm', img: 'https://t4.ftcdn.net/jpg/02/92/77/85/360_F_292778539_JeGMFXajaQtXpq5nRZLo87suJZkqJ7oS.jpg' },
+      { name: '1 Full Chicken Curry Cut', price: '144 / 500gm', img: 'https://newzealandfresh.sg/cdn/shop/products/Screen_Shot_2018-08-14_at_12.16.53_AM_grande.png?v=1563071603' },
+    ]
   },
-  // Add other shops if necessary
+  // Add more shops if necessary
 ];
 
 function Shoplist() {
   const { shopName } = useParams(); // Get the shop name from the URL
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
   const shop = shopsData.find((shop) => shop.name === shopName); // Find the shop details based on the name
 
   if (!shop) {
     return <div>Shop not found</div>; // Handle case when shop is not found
   }
+
+  const handleProductClick = (productName) => {
+    navigate(`/product/${productName}`); // Navigate to the product details page
+  };
 
   return (
     <div className="container mt-5 shop-container">
@@ -55,26 +66,13 @@ function Shoplist() {
       <div className="products-section">
         <h2 className="section-title">Products</h2>
         <div className="products">
-          <div className="product-card">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpQADIrYbC5agt9OFuvI5I5hieNxIJAEcQHQ&s" alt="Eggs" />
-            <h5>Egg</h5>
-            <p>100 / 10 p</p>
-          </div>
-          <div className="product-card">
-            <img src="https://www.shutterstock.com/image-photo/fresh-raw-chicken-basil-isolated-260nw-1064429528.jpg" alt="Chicken" />
-            <h5>Chicken</h5>
-            <p>144 / 500gm</p>
-          </div>
-          <div className="product-card">
-            <img src="https://t4.ftcdn.net/jpg/02/92/77/85/360_F_292778539_JeGMFXajaQtXpq5nRZLo87suJZkqJ7oS.jpg" alt="Chicken Wing" />
-            <h5>Chicken Wing</h5>
-            <p>144 / 500gm</p>
-          </div>
-          <div className="product-card">
-            <img src="https://newzealandfresh.sg/cdn/shop/products/Screen_Shot_2018-08-14_at_12.16.53_AM_grande.png?v=1563071603" alt="Chicken Curry Cut" />
-            <h5>1 Full Chicken Curry Cut</h5>
-            <p>144 / 500gm</p>
-          </div>
+          {shop.products.map((product) => (
+            <div key={product.name} className="product-card" onClick={() => handleProductClick(product.name)}>
+              <img src={product.img} alt={product.name} />
+              <h5>{product.name}</h5>
+              <p>{product.price}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
