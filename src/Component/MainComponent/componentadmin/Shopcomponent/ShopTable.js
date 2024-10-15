@@ -1,39 +1,59 @@
 import React, { useState } from 'react';
-import { Card, CardBody, CardHeader, Col, Container, Modal, ModalHeader, ModalBody, Row, Button, Nav } from 'reactstrap';
+import {
+  Card, CardBody, CardHeader, Col, Container,
+  Modal, ModalHeader, ModalBody, Row, Button, Nav
+} from 'reactstrap';
 
 const ShopTable = () => {
   const courseData = [
-    { id: 1, name: 'React for Beginners' },
-    { id: 2, name: 'Advanced JavaScript' },
-  ]; // Example data
+    { 
+      id: 1, name: 'Balaji chicken', location: 'Mumbai',
+      address: '123 Market St', pincode: '400001',
+      mobile: '9876543210', email: 'balaji@shop.com',
+      products: 'Chicken, Wings', price: '500 INR',
+    },
+    { 
+      id: 2, name: 'Chicken wing', location: 'Pune',
+      address: '456 Food Plaza', pincode: '411001',
+      mobile: '8765432109', email: 'wing@shop.com',
+      products: 'Wings, Thighs', price: '300 INR',
+    },
+  ];
 
+  const [addModal, setAddModal] = useState(false);  // Add to Shop Modal
+  const [detailsModal, setDetailsModal] = useState(false);  // Shop Details Modal
+  const [selectedShop, setSelectedShop] = useState(null);  // Store selected shop data
 
-  const [modal, setModal] = useState(false);
+  const toggleAddModal = () => setAddModal(!addModal);  // Toggle Add Modal
+  const toggleDetailsModal = () => setDetailsModal(!detailsModal);  // Toggle Details Modal
 
-  const toggleModal = () => setModal(!modal); // Toggle function
+  const handleRowClick = (shop) => {
+    setSelectedShop(shop);  // Set selected shop data
+    toggleDetailsModal();  // Open details modal
+  };
+
   return (
     <div className="page-content">
       <Container fluid>
         <Row>
           <Col lg={12}>
             <Card className="shadow-sm">
-            <CardHeader className="card-header border-0 bg-danger text-white">
-  <Row className="align-items-center gy-3">
-    <Col sm={6}>
-      <h5 className="card-title mb-0">Shop List</h5>
-    </Col>
-    <Col sm={6} className="text-sm-end">
-    <button
+              <CardHeader className="card-header border-0 bg-danger text-white">
+                <Row className="align-items-center gy-3">
+                  <Col sm={6}>
+                    <h5 className="card-title mb-0">Shop List</h5>
+                  </Col>
+                  <Col sm={6} className="text-sm-end">
+                    <button
                       type="button"
                       className="btn btn-light fw-bold"
-                      onClick={toggleModal} // Show modal on click
+                      onClick={toggleAddModal}  // Open Add Modal
                     >
                       <i className="ri-add-line align-bottom me-1"></i> Add To Shop
                     </button>
-    </Col>
-  </Row>
-</CardHeader>
-
+                  </Col>
+                </Row>
+              </CardHeader>
 
               <CardBody className="pt-0">
                 <Nav className="nav-tabs nav-tabs-custom nav-success" role="tablist"></Nav>
@@ -41,15 +61,15 @@ const ShopTable = () => {
                 <table className="table align-middle table-hover table-striped mt-3">
                   <thead className="table-light text-muted text-uppercase">
                     <tr>
-                      <th style={{ cursor: 'pointer' }}>Sr No</th>
-                      <th style={{ cursor: 'pointer' }}>Shop  Name</th>
+                      <th>Sr No</th>
+                      <th>Shop Name</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {courseData.length > 0 ? (
                       courseData.map((item, index) => (
-                        <tr key={item.id}>
+                        <tr key={item.id} onClick={() => handleRowClick(item)} style={{ cursor: 'pointer' }}>
                           <td>{index + 1}</td>
                           <td>{item.name}</td>
                           <td>
@@ -83,107 +103,61 @@ const ShopTable = () => {
         </Row>
       </Container>
 
-{/* modal */}
-<Modal isOpen={modal} toggle={toggleModal} size="lg">
-  <ModalHeader toggle={toggleModal}>Add to Shop</ModalHeader>
-  <ModalBody>
-    <form className="shopform">
-      <div className="row">
-        <div className="form-group col-md-6">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Shop Name"
-          />
-        </div>
-        <div className="form-group col-md-6">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Shop Location"
-          />
-        </div>
-        <div className="form-group col-md-6">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Address"
-          />
-        </div>
-        <div className="form-group col-md-6">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Pincode"
-          />
-        </div>
-        <div className="form-group col-md-6">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Mobile No"
-          />
-        </div>
-        <div className="form-group col-md-6">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Email Address"
-          />
-        </div>
-        <div className="form-group col-md-6">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Products"
-          />
-        </div>
-        <div className="form-group col-md-6">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Price of Product"
-          />
-        </div>
-        <div className="form-group col-md-6">
-          <label>Shop Images</label>
-          <input
-            type="file"
-            id="shopImages"
-            name="shopImages"
-            multiple
-            className="form-control-file"
-            required
-          />
-        </div>
-        <div className="form-group col-md-6">
-          <label>Product Images</label>
-          <input
-            type="file"
-            id="productImages"
-            name="productImages"
-            multiple
-            className="form-control-file"
-            required
-          />
-        </div>
-      </div>
-      {/* <button type="submit" className="btn btn-danger mt-3">
-        Submit
-      </button> */}
-    </form>
-    <div className="mt-3">
-      <Button color="danger" onClick={toggleModal}>
-        Confirm
-      </Button>{' '}
-      {/* <Button color="secondary" onClick={toggleModal}>
-        Cancel
-      </Button> */}
-    </div>
-  </ModalBody>
-</Modal>
+      {/* Add to Shop Modal */}
+      <Modal isOpen={addModal} toggle={toggleAddModal} size="lg">
+        <ModalHeader toggle={toggleAddModal}>Add to Shop</ModalHeader>
+        <ModalBody>
+          <form className="shopform">
+            <div className="row">
+              <div className="form-group col-md-6">
+                <input className="form-control" type="text" placeholder="Shop Name" />
+              </div>
+              <div className="form-group col-md-6">
+                <input className="form-control" type="text" placeholder="Shop Location" />
+              </div>
+              <div className="form-group col-md-6">
+                <input className="form-control" type="text" placeholder="Address" />
+              </div>
+              <div className="form-group col-md-6">
+                <input className="form-control" type="text" placeholder="Pincode" />
+              </div>
+              <div className="form-group col-md-6">
+                <input className="form-control" type="text" placeholder="Mobile No" />
+              </div>
+              <div className="form-group col-md-6">
+                <input className="form-control" type="text" placeholder="Email Address" />
+              </div>
+              <div className="form-group col-md-6">
+                <input className="form-control" type="text" placeholder="Products" />
+              </div>
+              <div className="form-group col-md-6">
+                <input className="form-control" type="text" placeholder="Price of Product" />
+              </div>
+            </div>
+            <Button color="danger" className="mt-3">Confirm</Button>
+          </form>
+        </ModalBody>
+      </Modal>
 
-
+      {/* Shop Details Modal */}
+      <Modal isOpen={detailsModal} toggle={toggleDetailsModal} size="lg">
+        <ModalHeader toggle={toggleDetailsModal}>
+          {selectedShop ? selectedShop.name : 'Shop Details'}
+        </ModalHeader>
+        <ModalBody>
+          {selectedShop && (
+            <div>
+              <p><strong>Location:</strong> {selectedShop.location}</p>
+              <p><strong>Address:</strong> {selectedShop.address}</p>
+              <p><strong>Pincode:</strong> {selectedShop.pincode}</p>
+              <p><strong>Mobile No:</strong> {selectedShop.mobile}</p>
+              <p><strong>Email:</strong> {selectedShop.email}</p>
+              <p><strong>Products:</strong> {selectedShop.products}</p>
+              <p><strong>Price:</strong> {selectedShop.price}</p>
+            </div>
+          )}
+        </ModalBody>
+      </Modal>
     </div>
   );
 };
