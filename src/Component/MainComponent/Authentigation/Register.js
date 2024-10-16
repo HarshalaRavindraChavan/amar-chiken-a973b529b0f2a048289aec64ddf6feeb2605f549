@@ -19,49 +19,51 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
   const [showToast, setShowToast] = useState(false);
   const [isOtpVisible, setIsOtpVisible] = useState(false);
 
+  // Handle input changes
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleOtpChange = (e) => setOtp(e.target.value);
 
+  // Function to send OTP
   const sendOtp = async () => {
     try {
       const response = await http.post(
         'http://localhost:5000/userAPI/send-otp',
-        JSON.stringify(formData), // Ensure it's serialized
+        JSON.stringify(formData), // Send only registration data
         { headers: { 'Content-Type': 'application/json' } }
       );
-  
+
       if (response.status === 201) {
         alert('OTP sent successfully. Please verify.');
-        setShowToast(true);
-        console.log(true);
+        console.log(error);
         
+        setShowToast(true);
         setIsOtpVisible(true);
-        setFormData(initialFormData);
       }
     } catch (err) {
-      if (err.response) {
-        setError(`Error: ${err.response.status} - ${err.response.data.message}`);
-      } else {
-        setError('Network error. Please check your connection.');
-      }
+      setError(
+        err.response
+          ? `Error: ${err.response.status} - ${err.response.data.message}`
+          : 'Network error. Please check your connection.'
+      );
     }
   };
-  
 
+  // Handle form submission to send OTP
   const handleFormSubmit = (e) => {
     e.preventDefault();
     setError(null);
     sendOtp();
   };
 
+  // Function to verify OTP separately
   const verifyOtp = async () => {
     try {
       const response = await http.post(
         'http://localhost:5000/userAPI/verify-otp',
-        { otp },
+        JSON.stringify({ otp, user_Email: formData.user_Email }), // Send OTP and email for verification
         { headers: { 'Content-Type': 'application/json' } }
       );
 
@@ -70,11 +72,11 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
         handleCloseregister();
       }
     } catch (err) {
-      if (err.response) {
-        setError(`Error: ${err.response.status} - ${err.response.data.message}`);
-      } else {
-        setError('Verification failed. Please try again.');
-      }
+      setError(
+        err.response
+          ? `Error: ${err.response.status} - ${err.response.data.message}`
+          : 'Verification failed. Please try again.'
+      );
     }
   };
 
@@ -91,12 +93,11 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
             {error && <div className="alert alert-danger">{error}</div>}
             {showToast && (
               <Toast onClose={() => setShowToast(false)} show={showToast} delay={3000} autohide>
-                <Toast.Body>Registered successfully! OTP sent.</Toast.Body>
+                <Toast.Body>OTP sent successfully!</Toast.Body>
               </Toast>
             )}
 
-
-<div className="form-group">
+            <div className="form-group">
               <input
                 type="text"
                 name="user_Name"
@@ -118,8 +119,6 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
               />
             </div>
 
-            
-
             <div className="form-group">
               <input
                 type="text"
@@ -131,7 +130,9 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
               />
             </div>
 
-            <button type="submit" className="custom-register-btn mt-3">Register</button>
+            <button type="submit" className="custom-register-btn mt-3">
+              Register
+            </button>
 
             {isOtpVisible && (
               <div className="mt-4">
@@ -142,7 +143,9 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
                   value={otp}
                   onChange={handleOtpChange}
                 />
-                <button className="btn btn-primary mt-2" onClick={verifyOtp}>Verify OTP</button>
+                <button className="btn btn-primary mt-2" onClick={verifyOtp}>
+                  Verify OTP
+                </button>
               </div>
             )}
           </div>
