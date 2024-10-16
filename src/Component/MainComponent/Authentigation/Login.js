@@ -10,91 +10,97 @@ import Register from "./Register";
 const Login = ({ showLoginModal, handleCloseLogin }) => {
   const { http, setToken } = Authuser();
   const [loginData, setLoginData] = useState({ user_phoneno: "" });
-  const [otp, setOtp] = useState(""); // Store OTP input
+  const [otpValues, setOtpValues] = useState(["", "", "", ""]); // Initialize OTP array
   const [showOtpModal, setShowOtpModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
-  const [error, setError] = useState(null);
-  const [buttonClicked, setButtonClicked] = useState(false); // State to track button click
   const navigate = useNavigate();
-
-  // Function to handle registration modal closing
-  const handleCloseRegister = () => setShowRegisterModal(false);
 
   // Function to handle input change for login form
   const handleInputChange = (e) => {
-    setLoginData({ ...loginData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setLoginData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  // Function to handle OTP input change
-  const handleOtpChange = (e) => setOtp(e.target.value);
-
-  // Function to handle form submission for login
+  // Function to handle form submission
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setError(null); // Reset any previous error
-
-    // Validate phone number input
-    if (!loginData.user_phoneno) {
-      toast.error("Please enter your phone number.");
-      return;
-    }
-
-    http.post(
-      "http://localhost:5000/userAPI/send-otp",
-      { user_phoneno: loginData.user_phoneno }, // Send phone number as JSON
-      { headers: { "Content-Type": "application/json" } }
-    )
-      .then((response) => {
-        if (response.status === 200) {
-          if (response.data.exists) {
-            alert("OTP sent successfully!");
-            setShowOtpModal(true); // Show OTP modal
-          } else {
-            toast.info("Phone number not found, please register.");
-            setShowRegisterModal(true); // Show registration modal
-          }
+    console.log(loginData);
+    fetch('http://localhost:5000/userAPI/send-otp', {
+      method: 'POST',
+      body: JSON.stringify(loginData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("login otp", data);
+        if (data.success) {
+          alert('OTP sent successfully!');
+          setShowOtpModal(true); // Show OTP modal if login is successful
         } else {
-          throw new Error(`Unexpected status: ${response.status}`);
+          toast.error(data.message || 'Invalid credentials');
         }
       })
-      .catch((err) => {
-        console.error("Error checking phone number:", err);
-        toast.error("Error processing request. Please try again.");
+      .catch((error) => {
+        console.log("Error", error);
+        toast.error('An error occurred. Please try again.');
       });
   };
 
-  // Function to handle OTP verification
-  const handleOtpSubmit = (e) => {
-    e.preventDefault();
+  const handleOtpChange = (index, value) => {
+    let tempOtpValues = [...otpValues];
+    tempOtpValues[index] = value;
+    setOtpValues(tempOtpValues);
+  };
 
-    http.post(
-      "http://localhost:5000/userAPI/verify-otp",
-      JSON.stringify({ user_phoneno: loginData.user_phoneno, otp }),
-      { headers: { "Content-Type": "application/json" } }
-    )
+  const verifyOtp = (e) => {
+    e.preventDefault();
+    const otp = otpValues.join('');
+    console.log("OTP entered:", otp);
+
+    // Prepare data for OTP verification
+    const data = {
+      user_phoneno: loginData.user_phoneno,
+      otp: otp
+    };
+
+    // Fetch the API for OTP verification
+    http.post('http://localhost:5000/userAPI/verify-otp', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
       .then((response) => {
-        if (response.status === 200) {
-          alert("OTP verified successfully!");
-          setToken(response.data.token); // Set the authentication token
-          navigate("/dash"); // Navigate to dashboard
-          setShowOtpModal(false); // Close OTP modal
+        console.log("OTP verification response", response);
+        if (response.success) {
+          alert('OTP verified successfully!');
+          // Optionally, navigate to another page or update user context
+          // navigate('/dashboard');
         } else {
-          throw new Error(`Unexpected status: ${response.status}`);
+          toast.error(response.message || 'OTP verification failed');
         }
       })
-      .catch((err) => {
-        console.error("Error verifying OTP:", err);
-        toast.error("Invalid OTP. Please try again.");
+      .catch((error) => {
+        console.log("Error verifying OTP", error);
+        toast.error('An error occurred while verifying OTP. Please try again.');
       });
+
+    // Close OTP modal after submission
+    handleCloseOtpModal();
   };
 
   // Function to handle closing the OTP modal
   const handleCloseOtpModal = () => setShowOtpModal(false);
 
-  // Function to handle button click
-  const handleButtonClick = () => {
-    setButtonClicked(true);
-  };
+  // Function to handle registration modal closing
+  const handleCloseRegister = () => setShowRegisterModal(false);
 
   return (
     <div>
@@ -128,15 +134,12 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
                 placeholder="Phone Number"
                 name="user_phoneno"
                 value={loginData.user_phoneno}
-                onChange={handleInputChange}
+                onChange={(e)=>handleInputChange(e)}
               />
               <br />
               <div className="container mt-2">
                 <Button type="submit" className="custom-login-btn mt-3">Login</Button>
               </div>
-              {/* New Button */}
-              {/* <Button onClick={handleButtonClick} className="mt-3">Click Me!</Button> */}
-              {/* {buttonClicked && <p className="mt-2">Button Clicked!</p>} Display message when button is clicked */}
             </div>
           </Modal.Body>
         </Form>
@@ -147,15 +150,21 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
         <Modal.Header closeButton>
           <Modal.Title>Verify OTP</Modal.Title>
         </Modal.Header>
-        <Form onSubmit={handleOtpSubmit}>
+        <Form onSubmit={verifyOtp}>
           <Modal.Body>
-            <input
-              className="form-control"
-              type="text"
-              placeholder="Enter OTP"
-              value={otp}
-              onChange={handleOtpChange}
-            />
+            <div className="d-flex justify-content-between">
+              {otpValues.map((value, index) => (
+                <input
+                  key={index}
+                  className="form-control"
+                  type="text"
+                  placeholder="Enter OTP"
+                  value={value}
+                  onChange={(e) => handleOtpChange(index, e.target.value)}
+                  maxLength="1"
+                />
+              ))}
+            </div>
             <div className="mt-3">
               <Button type="submit" className="btn btn-primary">Verify OTP</Button>
             </div>
