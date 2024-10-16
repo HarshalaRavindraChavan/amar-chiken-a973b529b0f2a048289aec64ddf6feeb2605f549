@@ -14,6 +14,7 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
   const [showOtpModal, setShowOtpModal] = useState(false);
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const [error, setError] = useState(null);
+  const [buttonClicked, setButtonClicked] = useState(false); // State to track button click
   const navigate = useNavigate();
 
   // Function to handle registration modal closing
@@ -46,7 +47,7 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
       .then((response) => {
         if (response.status === 200) {
           if (response.data.exists) {
-            toast.success("OTP sent successfully!");
+            alert("OTP sent successfully!");
             setShowOtpModal(true); // Show OTP modal
           } else {
             toast.info("Phone number not found, please register.");
@@ -85,11 +86,15 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
         console.error("Error verifying OTP:", err);
         toast.error("Invalid OTP. Please try again.");
       });
-
   };
 
   // Function to handle closing the OTP modal
   const handleCloseOtpModal = () => setShowOtpModal(false);
+
+  // Function to handle button click
+  const handleButtonClick = () => {
+    setButtonClicked(true);
+  };
 
   return (
     <div>
@@ -129,6 +134,9 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
               <div className="container mt-2">
                 <Button type="submit" className="custom-login-btn mt-3">Login</Button>
               </div>
+              {/* New Button */}
+              {/* <Button onClick={handleButtonClick} className="mt-3">Click Me!</Button> */}
+              {/* {buttonClicked && <p className="mt-2">Button Clicked!</p>} Display message when button is clicked */}
             </div>
           </Modal.Body>
         </Form>
