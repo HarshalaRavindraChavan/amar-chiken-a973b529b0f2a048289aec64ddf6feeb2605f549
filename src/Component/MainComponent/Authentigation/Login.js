@@ -16,88 +16,102 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  // Function to handle registration modal closing
   const handleCloseRegister = () => setShowRegisterModal(false);
 
+  // Function to handle input change for login form
   const handleInputChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
+  // Function to handle OTP input change
   const handleOtpChange = (e) => setOtp(e.target.value);
 
-  const handleFormSubmit = async (e) => {
+  // Function to handle form submission for login
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-    setError(null);
-  
+    setError(null); // Reset any previous error
+
+    // Validate phone number input
     if (!loginData.user_phoneno) {
       toast.error("Please enter your phone number.");
       return;
     }
-  
-    try {
-      const response = await http.post(
-        "http://localhost:5000/userAPI/send-otp",
-        { user_phoneno: loginData.user_phoneno }, // Send as a JSON object
-        { headers: { "Content-Type": "application/json" } }
-      );
-  
-      if (response.status === 200) {
-        if (response.data.exists) {
-          toast.success("OTP sent successfully!");
-          setShowOtpModal(true);
-        } else {
-          toast.info("Phone number not found, please register.");
-          setShowRegisterModal(true);
-        }
-      } else {
-        throw new Error(`Unexpected status: ${response.status}`);
-      }
-    } catch (err) {
-      console.error("Error checking phone number:", err);
-      toast.error("Error processing request. Please try again.");
-    }
-  };
-  
 
-  const handleOtpSubmit = async (e) => {
+    http.post(
+      "http://localhost:5000/userAPI/send-otp",
+      { user_phoneno: loginData.user_phoneno }, // Send phone number as JSON
+      { headers: { "Content-Type": "application/json" } }
+    )
+      .then((response) => {
+        if (response.status === 200) {
+          if (response.data.exists) {
+            toast.success("OTP sent successfully!");
+            setShowOtpModal(true); // Show OTP modal
+          } else {
+            toast.info("Phone number not found, please register.");
+            setShowRegisterModal(true); // Show registration modal
+          }
+        } else {
+          throw new Error(`Unexpected status: ${response.status}`);
+        }
+      })
+      .catch((err) => {
+        console.error("Error checking phone number:", err);
+        toast.error("Error processing request. Please try again.");
+      });
+  };
+
+  // Function to handle OTP verification
+  const handleOtpSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      const response = await http.post(
-        "http://localhost:5001/userAPI/verify-otp", // Updated API
-        JSON.stringify({ user_phoneno: loginData.user_phoneno, otp }),
-        { headers: { "Content-Type": "application/json" } }
-      );
+    http.post(
+      "http://localhost:5000/userAPI/verify-otp",
+      JSON.stringify({ user_phoneno: loginData.user_phoneno, otp }),
+      { headers: { "Content-Type": "application/json" } }
+    )
+      .then((response) => {
+        if (response.status === 200) {
+          alert("OTP verified successfully!");
+          setToken(response.data.token); // Set the authentication token
+          navigate("/dash"); // Navigate to dashboard
+          setShowOtpModal(false); // Close OTP modal
+        } else {
+          throw new Error(`Unexpected status: ${response.status}`);
+        }
+      })
+      .catch((err) => {
+        console.error("Error verifying OTP:", err);
+        toast.error("Invalid OTP. Please try again.");
+      });
 
-      if (response.status === 200) {
-        alert("OTP verified successfully!");
-        setToken(response.data.token);
-        navigate("/dash"); // Navigate to dashboard
-        setShowOtpModal(false);
-      } else {
-        throw new Error(`Unexpected status: ${response.status}`);
-      }
-    } catch (err) {
-      console.error("Error verifying OTP:", err);
-      toast.error("Invalid OTP. Please try again.");
-    }
   };
 
+  // Function to handle closing the OTP modal
   const handleCloseOtpModal = () => setShowOtpModal(false);
 
   return (
     <div>
       {/* Login Modal */}
       <Modal show={showLoginModal} onHide={handleCloseLogin} dialogClassName="custom-modal-right">
-        <Modal.Header className="d-flex justify-content-between align-items-center">
-          <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseLogin}></button>
+        <Modal.Header className="d-flex align-items-center justify-content-between">
           <Modal.Title className="mx-auto">Login</Modal.Title>
+          <Button variant="close" onClick={handleCloseLogin}></Button>
         </Modal.Header>
 
         <Form onSubmit={handleFormSubmit}>
           <Modal.Body>
             <div>
               <span className="text-black">or </span>
-              <span onClick={() => setShowRegisterModal(true)} className="text-red" style={{ cursor: "pointer" }}>
+              <span 
+                onClick={() => {
+                  handleCloseLogin(); // Close the login modal
+                  setShowRegisterModal(true); // Show the registration modal
+                }} 
+                className="text-red" 
+                style={{ cursor: "pointer" }}
+              >
                 Create an account
               </span>
             </div>
@@ -113,7 +127,7 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
               />
               <br />
               <div className="container mt-2">
-                <button type="submit" className="custom-login-btn mt-3">Login</button>
+                <Button type="submit" className="custom-login-btn mt-3">Login</Button>
               </div>
             </div>
           </Modal.Body>
@@ -135,7 +149,7 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
               onChange={handleOtpChange}
             />
             <div className="mt-3">
-              <button type="submit" className="btn btn-primary">Verify OTP</button>
+              <Button type="submit" className="btn btn-primary">Verify OTP</Button>
             </div>
           </Modal.Body>
         </Form>
