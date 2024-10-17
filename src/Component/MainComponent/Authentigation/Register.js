@@ -6,78 +6,47 @@ import './Register.css';
 const Register = ({ showregisterModal, handleCloseregister }) => {
   const { http } = Authuser();
 
-  const initialFormData = {
+  const [formData, setFormData] = useState({
     user_Name: '',
     user_Email: '',
     user_phoneno: '',
     user_Password: '',
-  };
+  });
 
-  const [formData, setFormData] = useState(initialFormData);
-  const [otp, setOtp] = useState('');
-  const [error, setError] = useState(null);
-  const [showToast, setShowToast] = useState(false);
-  const [isOtpVisible, setIsOtpVisible] = useState(false);
+  const [error, setError] = useState('');
+  // const [showToast, setShowToast] = useState(false);
 
-  // Handle input changes
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleOtpChange = (e) => setOtp(e.target.value);
-
-  // Function to send OTP
-  const sendOtp = async () => {
-    try {
-      const response = await http.post(
-        'http://localhost:5000/userAPI/send-otp',
-        JSON.stringify(formData), // Send only registration data
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-
-      if (response.status === 201) {
-        alert('OTP sent successfully. Please verify.');
-        console.log(error);
-        
-        setShowToast(true);
-        setIsOtpVisible(true);
-      }
-    } catch (err) {
-      setError(
-        err.response
-          ? `Error: ${err.response.status} - ${err.response.data.message}`
-          : 'Network error. Please check your connection.'
-      );
-    }
-  };
-
-  // Handle form submission to send OTP
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    setError(null);
-    sendOtp();
-  };
 
-  // Function to verify OTP separately
-  const verifyOtp = async () => {
-    try {
-      const response = await http.post(
-        'http://localhost:5000/userAPI/verify-otp',
-        JSON.stringify({ otp, user_Email: formData.user_Email }), // Send OTP and email for verification
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-
-      if (response.status === 200) {
-        alert('OTP verified successfully!');
-        handleCloseregister();
-      }
-    } catch (err) {
-      setError(
-        err.response
-          ? `Error: ${err.response.status} - ${err.response.data.message}`
-          : 'Verification failed. Please try again.'
-      );
-    }
+    fetch('http://localhost:5000/userAPI/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((data) => {
+            throw new Error(data.message || 'Registration failed');
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Register data:', data);
+      
+        setError(''); // Clear any previous errors
+      })
+      .catch((err) => {
+        console.error('Error:', err);
+        setError(err.message || 'Network error or server not reachable.');
+      });
   };
 
   return (
@@ -90,12 +59,13 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
       <Form onSubmit={handleFormSubmit}>
         <Modal.Body>
           <div className="container">
-            {error && <div className="alert alert-danger">{error}</div>}
+            {/* {error && <div className="alert alert-danger mt-2">{error}</div>}
+
             {showToast && (
               <Toast onClose={() => setShowToast(false)} show={showToast} delay={3000} autohide>
                 <Toast.Body>OTP sent successfully!</Toast.Body>
               </Toast>
-            )}
+            )} */}
 
             <div className="form-group">
               <input
@@ -130,24 +100,20 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
               />
             </div>
 
+            <div className="form-group">
+              <input
+                type="password"
+                name="user_Password"
+                className="form-control"
+                placeholder="Password"
+                value={formData.user_Password}
+                onChange={handleInputChange}
+              />
+            </div>
+
             <button type="submit" className="custom-register-btn mt-3">
               Register
             </button>
-
-            {isOtpVisible && (
-              <div className="mt-4">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Enter OTP"
-                  value={otp}
-                  onChange={handleOtpChange}
-                />
-                <button className="btn btn-primary mt-2" onClick={verifyOtp}>
-                  Verify OTP
-                </button>
-              </div>
-            )}
           </div>
         </Modal.Body>
       </Form>

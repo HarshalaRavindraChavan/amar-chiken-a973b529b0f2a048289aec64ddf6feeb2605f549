@@ -15,7 +15,7 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const navigate = useNavigate();
 
-  // Function to handle input change for login form
+  // Handle input change for login form
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setLoginData((prevData) => ({
@@ -24,30 +24,33 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
     }));
   };
 
-  // Function to handle form submission
+  // Handle form submission
   const handleFormSubmit = (e) => {
     e.preventDefault();
     console.log(loginData);
-    fetch('http://localhost:5000/userAPI/send-otp', {
-      method: 'POST',
-      body: JSON.stringify(loginData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("login otp", data);
-        if (data.success) {
-          alert('OTP sent successfully!');
-          setShowOtpModal(true); // Show OTP modal if login is successful
+
+    http
+      .post("/send-otp", loginData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log("login otp", res.data);
+        if (res.data.success) {
+          alert("OTP sent successfully!");
+          setShowOtpModal(true); // Show OTP modal if OTP sent successfully
         } else {
-          toast.error(data.message || 'Invalid credentials');
+          toast.error(res.data.message || "Invalid credentials");
+          handleCloseLogin(); // Close login modal
+          setShowRegisterModal(true); // Show registration modal
         }
       })
       .catch((error) => {
-        console.log("Error", error);
-        toast.error('An error occurred. Please try again.');
+        console.error("Error", error);
+        toast.error("An error occurred. Please try again.");
+        handleCloseLogin(); // Close login modal
+        setShowRegisterModal(true); // Show registration modal
       });
   };
 
@@ -59,47 +62,38 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
 
   const verifyOtp = (e) => {
     e.preventDefault();
-    const otp = otpValues.join('');
+    const otp = otpValues.join("");
     console.log("OTP entered:", otp);
 
-    // Prepare data for OTP verification
     const data = {
       user_phoneno: loginData.user_phoneno,
-      otp: otp
+      otp: otp,
     };
 
-    // Fetch the API for OTP verification
-    http.post('http://localhost:5000/userAPI/verify-otp', {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        console.log("OTP verification response", response);
-        if (response.success) {
-          alert('OTP verified successfully!');
-          // Optionally, navigate to another page or update user context
-          // navigate('/dashboard');
+    http
+      .post("/verify-otp", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log("OTP verification response", res.data);
+        if (res.data.success) {
+          alert("OTP verified successfully!");
+          navigate("/dash"); // Navigate to dashboard
         } else {
-          toast.error(response.message || 'OTP verification failed');
+          toast.error(res.data.message || "OTP verification failed");
         }
       })
       .catch((error) => {
-        console.log("Error verifying OTP", error);
-        toast.error('An error occurred while verifying OTP. Please try again.');
+        console.error("Error verifying OTP", error);
+        toast.error("An error occurred while verifying OTP. Please try again.");
       });
 
-    // Close OTP modal after submission
-    handleCloseOtpModal();
+    handleCloseOtpModal(); // Close OTP modal after submission
   };
 
-  // Function to handle closing the OTP modal
   const handleCloseOtpModal = () => setShowOtpModal(false);
-
-  // Function to handle registration modal closing
   const handleCloseRegister = () => setShowRegisterModal(false);
 
   return (
@@ -111,16 +105,16 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
           <Button variant="close" onClick={handleCloseLogin}></Button>
         </Modal.Header>
 
-        <Form onSubmit={handleFormSubmit}>
+        <Form onSubmit={(e)=>handleFormSubmit(e)}>
           <Modal.Body>
             <div>
               <span className="text-black">or </span>
-              <span 
+              <span
                 onClick={() => {
                   handleCloseLogin(); // Close the login modal
                   setShowRegisterModal(true); // Show the registration modal
-                }} 
-                className="text-red" 
+                }}
+                className="text-red"
                 style={{ cursor: "pointer" }}
               >
                 Create an account
@@ -138,7 +132,9 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
               />
               <br />
               <div className="container mt-2">
-                <Button type="submit" className="custom-login-btn mt-3">Login</Button>
+                <button type="submit" className="custom-login-btn mt-3">
+                  Login
+                </button>
               </div>
             </div>
           </Modal.Body>
@@ -166,7 +162,9 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
               ))}
             </div>
             <div className="mt-3">
-              <Button type="submit" className="btn btn-primary">Verify OTP</Button>
+              <button type="submit" className="btn btn-primary">
+                Verify OTP
+              </button>
             </div>
           </Modal.Body>
         </Form>

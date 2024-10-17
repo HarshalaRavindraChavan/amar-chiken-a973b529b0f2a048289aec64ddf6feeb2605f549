@@ -24,7 +24,7 @@ const Authuser = () => {
   const [user,setUser] = useState(getUser());
     const http = axios.create({
        
-        baseURL: "http://localhost:5000/userAPI/login",
+        baseURL: "http://localhost:5000/userAPI",
         
         headers: {
           "Content-Type": "multipart/form-data",
