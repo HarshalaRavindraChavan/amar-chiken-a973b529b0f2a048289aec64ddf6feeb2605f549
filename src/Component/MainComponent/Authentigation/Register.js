@@ -51,9 +51,10 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
 
   return (
     <Modal show={showregisterModal} onHide={handleCloseregister} dialogClassName="custom-modal-right">
+       <button type="button" className="btn-close" onClick={handleCloseregister} style={{margin:'10px'}}></button>
       <Modal.Header className="d-flex justify-content-between align-items-center">
-        <button type="button" className="btn-close" onClick={handleCloseregister}></button>
-        <Modal.Title className="mx-auto">Please Sign Up</Modal.Title>
+       
+        <Modal.Title className="mx-auto" >Please Sign Up</Modal.Title>
       </Modal.Header>
 
       <Form onSubmit={handleFormSubmit}>
@@ -67,49 +68,57 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
               </Toast>
             )} */}
 
-            <div className="form-group">
+<div className="floating-label">
               <input
+              style={{height:'10vh'}}
                 type="text"
                 name="user_Name"
-                className="form-control"
-                placeholder="Name"
+               className="form-control "
+                placeholder=""
                 value={formData.user_Name}
                 onChange={handleInputChange}
               />
-            </div>
+              <label> Name</label>
+              </div>
 
-            <div className="form-group">
+              <div className="floating-label">
               <input
+               style={{height:'10vh'}}
                 type="text"
                 name="user_phoneno"
-                className="form-control"
-                placeholder="Phone Number"
+                className="form-control "
+                placeholder=""
                 value={formData.user_phoneno}
                 onChange={handleInputChange}
               />
-            </div>
+             <label>Phone Number</label>
+             </div>
 
-            <div className="form-group">
+             <div className="floating-label">
               <input
+               style={{height:'10vh'}}
                 type="text"
                 name="user_Email"
-                className="form-control"
-                placeholder="Email"
+                className="form-control "
+                placeholder=""
                 value={formData.user_Email}
                 onChange={handleInputChange}
               />
+            <label>Email</label>
             </div>
 
-            <div className="form-group">
+            <div className="floating-label">
               <input
-                type="password"
+               style={{height:'10vh'}}
+                type="text"
                 name="user_Password"
-                className="form-control"
-                placeholder="Password"
+               className="form-control "
+                placeholder=""
                 value={formData.user_Password}
                 onChange={handleInputChange}
               />
-            </div>
+             <label>Password</label>
+             </div>
 
             <button type="submit" className="custom-register-btn mt-3">
               Register

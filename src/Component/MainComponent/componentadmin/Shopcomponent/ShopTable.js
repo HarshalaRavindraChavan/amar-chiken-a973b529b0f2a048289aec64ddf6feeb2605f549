@@ -38,22 +38,24 @@ const ShopTable = () => {
         <Row>
           <Col lg={12}>
             <Card className="shadow-sm">
-              <CardHeader className="card-header border-0 bg-danger text-white">
-                <Row className="align-items-center gy-3">
-                  <Col sm={6}>
-                    <h5 className="card-title mb-0">Shop List</h5>
-                  </Col>
-                  <Col sm={6} className="text-sm-end">
-                    <button
-                      type="button"
-                      className="btn btn-light fw-bold"
-                      onClick={toggleAddModal}  // Open Add Modal
-                    >
-                      <i className="ri-add-line align-bottom me-1"></i> Add To Shop
-                    </button>
-                  </Col>
-                </Row>
-              </CardHeader>
+            <CardHeader className="card-header border-0 bg-danger text-white shadow-sm rounded">
+  <Row className="align-items-center gy-2">
+    <Col sm={6}>
+      <h5 className="card-title mb-0 fw-semibold">🛍️ Shop List</h5>
+    </Col>
+    <Col sm={6} className="text-sm-end">
+      <button
+        type="button"
+        className="btn btn-sm btn-light text-danger fw-bold d-flex align-items-center gap-1"
+        style={{ width: '200px',  }}
+        onClick={toggleAddModal} // Open Add Modal
+      >
+        <i className="ri-add-line align-bottom-center"></i> Add
+      </button>
+    </Col>
+  </Row>
+</CardHeader>
+
 
               <CardBody className="pt-0">
                 <Nav className="nav-tabs nav-tabs-custom nav-success" role="tablist"></Nav>
@@ -76,7 +78,7 @@ const ShopTable = () => {
                             <ul className="list-inline hstack gap-2 mb-0">
                               <li className="list-inline-item">
                                 <button className="btn btn-sm btn-outline-primary">
-                                  <i className="ri-pencil-fill"></i> Edit
+                                  <i className="ri-pencil-fill"></i> View
                                 </button>
                               </li>
                               <li className="list-inline-item">

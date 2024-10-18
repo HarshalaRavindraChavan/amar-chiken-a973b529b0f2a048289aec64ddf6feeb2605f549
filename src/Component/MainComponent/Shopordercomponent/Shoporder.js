@@ -46,10 +46,10 @@ const Shoporder = () => {
         <div className="small-bill-card">
           <h4>Order summary</h4>
           <div className="summary-details">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p><strong>Order</strong> &nbsp;&nbsp;: &nbsp;&nbsp;Rs. 223.00</p>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p><strong>Taxes</strong> &nbsp;&nbsp;: Rs. 3.00</p>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p><strong>Delivery fees</strong> &nbsp;&nbsp;: Rs. 10.00</p>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p><strong>Total</strong> &nbsp;&nbsp;: Rs. 236.00</p>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p><strong>Order</strong> &nbsp;&nbsp;: &nbsp;&nbsp;Rs. 223.00</p>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p><strong>Taxes</strong> &nbsp;&nbsp;: Rs. 3.00</p>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p><strong>Delivery fees</strong> &nbsp;&nbsp;: Rs. 10.00</p>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<p><strong>Total</strong> &nbsp;&nbsp;: Rs. 236.00</p>
           </div>
           <h6>Estimated delivery time  &nbsp;&nbsp;: 15-30 mins</h6>
 

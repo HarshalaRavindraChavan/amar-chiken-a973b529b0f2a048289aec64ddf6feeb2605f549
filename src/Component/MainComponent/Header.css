@@ -3,18 +3,20 @@ form {
   }
   
   /* Full-width inputs */
-  input[type=text], input[type=password] {
-    width: 100%; /* This will override the 400px */
-    padding: 12px 20px;
+input[type=text], input[type=password] {
+    width: 100%; 
+     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
-    box-sizing: border-box;
+    box-sizing: border-box; 
+    border-radius: 5px;
+    text-align: center;
     /* If you want a fixed width, comment out the line above */
     /* width: 400px; */
-    border-radius: 20px;
-    text-align: center;
-}
+  
+    /* height: 10vh; */
+} 
 
 .sty {
   background: #9A292F; /* No quotes around the color */
