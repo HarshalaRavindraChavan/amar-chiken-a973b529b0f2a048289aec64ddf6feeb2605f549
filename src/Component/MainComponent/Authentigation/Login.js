@@ -28,7 +28,6 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
 
   // Handle OTP input change
   const handleOtpChange = (index, value) => {
-    if (value.length > 1) return; // Allow only one character per input
     const tempOtpValues = [...otpValues];
     tempOtpValues[index] = value;
     setOtpValues(tempOtpValues);
