@@ -67,7 +67,7 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
 
     http
       .post("/verify-otp", data, {
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },  
       })
       .then((res) => {
         console.log("OTP verification response", res.data);

@@ -1,11 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Shopform.css';
+import Authuser from '../../Authentigation/Authuser';
 
 const Shopform = () => {
+const [shopdata, setshopdata]=useState({shopName:'', shopLocation:'',address:'',pincode:'',mobileNumber:'',emailAddress:'',shopImage:''})
+const [http]=Authuser()
+
+const handleInputChange=(e)=>{
+  setshopdata({ ...shopdata, [e.target.name]: e.target.value });
+}
+
+const handleFormSubmit = (e) => {
+  e.preventDefault();
+
+  http.post('http://localhost:5000/api/shops', {
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  })
+    .then((response) => {
+      if (response.status===200) {
+       alert("shop added");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log('shop data:', data);
+    
+      
+    })
+    .catch((err) => {
+      console.error('Error:', err);
+      
+    });
+};
+
   return (
     <div className="container shopform-container">
       <h2 className="form-title">Shop Information</h2>
-      <form className="shopform">
+      {/* <form className="shopform"> */}
+        <div className="shopform">
   <div className="row">
     <div className="form-group col-md-6 custom-input">
       <input
@@ -61,10 +93,11 @@ const Shopform = () => {
       />
     </div>
   </div>
-  <button type="submit" className="submit-button">
+  <button type="submit" className="submit-button" onClick={(e)=>handleFormSubmit(e)}>
     Submit
   </button>
-</form>
+  </div>
+{/* </form> */}
 
     </div>
   );
