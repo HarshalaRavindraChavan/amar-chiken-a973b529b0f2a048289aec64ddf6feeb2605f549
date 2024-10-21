@@ -28,10 +28,28 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
   // Submit login form and send OTP
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log(loginData);
 
-    http
-      .post("/send-otp", loginData, {
+    console.log("Register Value: " + register);
+    // check if register form is shown
+    if(register) {
+      http
+      .post(process.env.REACT_APP_API_URL + "user/register", loginData, {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      })
+      .then((res) => {
+        console.log("login otp", res.data);
+        if (res.status === 200) {
+          alert("User Registered successfully!");
+          setIsOtpSent(true); // Display OTP input field
+        } 
+      })
+      .catch((error) => {
+        console.error("Error", error);
+        toast.error("An error occurred. Please try again.");
+      });
+    } else {
+      http
+      .post(process.env.REACT_APP_API_URL + "user/send-otp", loginData, {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       })
       .then((res) => {
@@ -39,16 +57,27 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
         if (res.status === 200) {
           alert("OTP sent successfully!");
           setIsOtpSent(true); // Display OTP input field
-        } else {
-          toast.error("Invalid credentials");
-          handleCloseLogin();
-          setRegister(true); // Show registration modal if login fails
-        }
+        } 
+        // Below condition doesn't occur ever
+        // else 
+        // {
+        //   toast.error("Invalid credentials");
+        //   handleCloseLogin();
+        //   setRegister(true); // Show registration modal if login fails
+        // }
       })
       .catch((error) => {
+        if(error.status === 400) {
+          if(error.response.data.code === "NO_USER") {
+            toast.error("Invalid credentials");
+            // handleCloseLogin();
+            setRegister(true); // Show registration modal if login fails
+          }
+        }
         console.error("Error", error);
         toast.error("An error occurred. Please try again.");
       });
+    }
   };
 
   // Verify OTP
@@ -66,8 +95,8 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
     };
 
     http
-      .post("/verify-otp", data, {
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },  
+      .post(process.env.REACT_APP_API_URL + "user/verify-otp", data, {
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
       })
       .then((res) => {
         console.log("OTP verification response", res.data);

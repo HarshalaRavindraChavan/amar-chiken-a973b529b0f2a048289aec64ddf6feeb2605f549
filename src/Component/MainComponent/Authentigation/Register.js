@@ -23,7 +23,7 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    fetch('http://localhost:5000/userAPI/register', {
+    fetch(process.env.REACT_APP_API_URL + 'user/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
