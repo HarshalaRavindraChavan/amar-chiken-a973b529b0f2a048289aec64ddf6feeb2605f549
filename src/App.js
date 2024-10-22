@@ -6,12 +6,12 @@ import Product from './Component/MainComponent/Product';
 import Dashboard from './Component/MainComponent/Dashboard';
 import Allcontent from './Component/MainComponent/componentadmin/Sidebar.js/Allcontent';
 import Shoplist from './Component/MainComponent/Shoplist';
-import Shopform from './Component/MainComponent/componentadmin/Shopcomponent/Shopform';
+// import Shopform from './Component/MainComponent/componentadmin/Shopcomponent/Shopform';
 import Shoporder from './Component/MainComponent/Shopordercomponent/Shoporder';
-import ShopTable from './Component/MainComponent/componentadmin/Shopcomponent/ShopTable';
-// import Shoporder from './Component/MainComponent/Shopordercomponent/Shoporder';
-// import verticaleNavbar from './Component/MainComponent/componentadmin/verticaleNavbar';
-// import DashApp from './Component/Admincomponent/DashApp';
+import Addshop from './Component/MainComponent/componentadmin/Sidebar.js/Addshop';
+import Tableshop from './Component/MainComponent/componentadmin/Sidebar.js/Tableshop';
+
+
 
 function App() {
   return (
@@ -23,12 +23,12 @@ function App() {
         <Route path='/dashboard' element={<Master Rcf={Dashboard}/>}/>
         <Route path='/dash' element={<Allcontent />}/>
         <Route path='/shop/:shopName' element={<Master Rcf={Shoplist}/>}/>
-<Route path='/shopform' element={<Master Rcf={Shopform}/>}/>
+<Route path='/shopadd' element={<Master Rcf={Addshop}/>}/>
         {/* <Route path='/dash' element={<Master Rcf={verticaleNavbar}/>}/> */}
         {/* <Route path='/dashboards' element={<DashApp/>}></Route> */}
         {/* <Route path="/shop/:shopName" element={<Master Rcf={Shoporder}/>} /> */}
         <Route path="/product/:productName" element={<Master Rcf={Shoporder}/>} />
-        <Route path='/shoptale' element={<Master Rcf={ShopTable}/>}/>
+        <Route path='/shoptale' element={<Master Rcf={Tableshop}/>}/>
       </Routes>
       </BrowserRouter>
     </div>

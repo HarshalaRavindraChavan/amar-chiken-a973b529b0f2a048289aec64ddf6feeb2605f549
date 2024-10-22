@@ -95,12 +95,14 @@ const Content = () => {
         <Grid item xs={12} sm={6} md={3}>
           <Paper sx={{ padding: 3, display: 'flex', alignItems: 'center', bgcolor: '#f5f5f5', borderRadius: 2 }}>
             <AccountCircleIcon sx={{ fontSize: 40, color: '#851919', marginRight: 2 }} />
+            {/* <Link to='/shopadd' > */}
             <div>
-              <Link to='/shopform' style={{ textDecoration: 'none', color: 'inherit' }}>
-                <Typography variant="h6">Add To Shop</Typography>
-              </Link>
-              <Typography variant="body2">Manage your add product.</Typography>
-            </div>
+            <Link to='/shopadd' style={{ textDecoration: 'none', color: 'inherit' }}> 
+        <Typography variant="h6">Add To Shop</Typography>
+        </Link>
+      <Typography variant="body2">Manage your add product.</Typography>
+    </div>
+    {/* </Link> */}
           </Paper>
         </Grid>
 
