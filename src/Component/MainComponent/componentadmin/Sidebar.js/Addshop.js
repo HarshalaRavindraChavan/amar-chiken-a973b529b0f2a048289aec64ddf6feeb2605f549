@@ -4,7 +4,7 @@ import Authuser from '../../Authentigation/Authuser';
 import { Alert } from 'react-bootstrap';
 
 const Addshop = () => {
-  const { http } = Authuser(); // Ensure http is available
+  const { http } = Authuser();
 
   const [shopData, setShopData] = useState({
     shopName: '',
@@ -22,25 +22,28 @@ const Addshop = () => {
 
   const onInputChange = (e) => {
     const { name, value, type, files } = e.target;
-    if (type === 'file') {
-      setShopData((prevState) => ({
-        ...prevState,
-        [name]: Array.from(files),
-      }));
-    } else {
-      setShopData((prevState) => ({ ...prevState, [name]: value }));
-    }
+    setShopData((prevState) => ({
+      ...prevState,
+      [name]: type === 'file' ? Array.from(files) : value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate required fields before sending request
+    if (!shopData.shopName || !shopData.emailAddress) {
+      setResponseMessage('Shop Name and Email Address are required.');
+      setAlertVariant('danger');
+      return;
+    }
+
     const formData = new FormData();
-    Object.keys(shopData).forEach((key) => {
-      if (Array.isArray(shopData[key])) {
-        shopData[key].forEach((file) => formData.append(key, file));
+    Object.entries(shopData).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((file) => formData.append(key, file));
       } else {
-        formData.append(key, shopData[key]);
+        formData.append(key, value);
       }
     });
 
@@ -53,7 +56,7 @@ const Addshop = () => {
       setAlertVariant('success');
       console.log('Response:', response.data);
 
-      // Reset form
+      // Reset form data
       setShopData({
         shopName: '',
         shopLocation: '',
@@ -65,9 +68,11 @@ const Addshop = () => {
         shopImages: [],
       });
     } catch (error) {
-      setResponseMessage('There was an error submitting the form.');
-      setAlertVariant('danger');
       console.error('Error:', error);
+
+      const errorMsg = error?.response?.data?.message || 'There was an error submitting the form.';
+      setResponseMessage(errorMsg);
+      setAlertVariant('danger');
     }
   };
 
