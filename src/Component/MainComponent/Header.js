@@ -9,12 +9,15 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
-import Register from "./Authentigation/Register";
+// import Register from "./Authentigation/Register";
 
 import Login from "./Authentigation/Login";
+import Authuser from "./Authentigation/Authuser";
 
 
 const Header = () => {
+
+  const { logout, token, http, user } = Authuser();
   const [showCityModal, setShowCityModal] = useState(false);
 
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -40,7 +43,9 @@ const Header = () => {
   
 
 
- 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => setIsOpen(!isOpen);
 
   return (
     <div>
@@ -159,12 +164,42 @@ const Header = () => {
                 </a>
 
                 {/* My Account Button with custom class */}
-                <button
-                  className="btn btn-outline-danger d-flex align-items-center custom-width"
-                  onClick={handleShowLogin}
-                >
-                  <i className="fa-solid fa-user me-1"></i> Sign In
-                </button>
+                {!token ? (
+        // Sign In Button
+        <button
+          className="btn btn-outline-danger d-flex align-items-center custom-width"
+          onClick={handleShowLogin}
+        >
+          <i className="fa-solid fa-user me-1"></i> Sign In
+        </button>
+      ) : (
+        // Dropdown Trigger with User Name
+        <div className="dropdown-trigger" onClick={toggleDropdown}>
+          <i className="fa fa-user me-1"></i> {user?.name || 'User'}
+        </div>
+      )}
+
+      {isOpen && token && (
+        <div className="dropdown-menu">
+          <ul>
+            <li>
+              <Link to="/profile">Profile</Link>
+            </li>
+            <li>
+              <Link to="/orders">Orders</Link>
+            </li>
+            <li>
+              <Link to="/swiggy-one">Amar chicken One</Link>
+            </li>
+            <li>
+              <Link to="/favourites">Favourites</Link>
+            </li>
+            <li>
+              <Link to="/logout">Logout</Link>
+            </li>
+          </ul>
+        </div>
+      )}
               </div>
 
               {/* Account Modal */}
