@@ -1,0 +1,42 @@
+const onSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    Object.keys(shopData).forEach((key) => {
+      if (Array.isArray(shopData[key])) {
+        shopData[key].forEach((file) => formData.append(key, file));
+      } else {
+        formData.append(key, shopData[key]);
+      }
+    })
+
+  
+    try {
+      const res = await http.post('/shops', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      if (res.status === 200) {
+        alert('Shop added successfully!');
+        setShopData({
+          shopName:'',
+          shopLocation:'',
+          address:'',
+          street:'',
+          pincode:'',
+          mobileNumber:'',
+          emailAddress: '',
+          shopImages: {},
+        });
+
+        // Reset the file input field
+        document.getElementById('shopImages').value = '';
+      }
+     else if(catch (err)){
+      console.error('Error:', err);
+      alert('An error occurred while adding the shop. Please try again.');
+}
+
+    }
+  }
+  }

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import Authuser from "./Authuser";
+
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Register.css";
 import Register from "./Register";
+import Authuser from "./Authuser";
 
 const Login = ({ showLoginModal, handleCloseLogin }) => {
   const { http } = Authuser();
@@ -41,6 +42,8 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
         if (res.status === 200) {
           alert("User Registered successfully!");
           setIsOtpSent(true); // Display OTP input field
+         
+          
         } 
       })
       .catch((error) => {

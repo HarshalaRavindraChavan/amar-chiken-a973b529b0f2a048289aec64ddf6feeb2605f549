@@ -28,22 +28,33 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var Authuser = function Authuser() {
-  var navigate = (0, _reactRouterDom.useNavigate)();
+  var navigate = (0, _reactRouterDom.useNavigate)(); // Helper functions for session management
 
   var getToken = function getToken() {
-    var tokenString = sessionStorage.getItem("token");
-    var userToken = JSON.parse(tokenString);
-    return userToken;
+    try {
+      var tokenString = sessionStorage.getItem('token');
+      return tokenString ? JSON.parse(tokenString) : null;
+    } catch (error) {
+      console.error('Failed to parse token:', error);
+      return null;
+    }
   };
 
   var getUser = function getUser() {
-    var userString = JSON.parse(sessionStorage.getItem("user"));
-    return userString;
+    try {
+      var userString = sessionStorage.getItem('user');
+      return userString ? JSON.parse(userString) : null;
+    } catch (error) {
+      console.error('Failed to parse user:', error);
+      return null;
+    }
   };
 
   var saveToken = function saveToken(user, token) {
-    sessionStorage.setItem("token", JSON.stringify(token));
-    sessionStorage.setItem("user", JSON.stringify(user));
+    sessionStorage.setItem('token', JSON.stringify(token));
+    sessionStorage.setItem('user', JSON.stringify(user));
+    setToken(token);
+    setUser(user);
   };
 
   var _useState = (0, _react.useState)(getToken()),
@@ -54,29 +65,28 @@ var Authuser = function Authuser() {
   var _useState3 = (0, _react.useState)(getUser()),
       _useState4 = _slicedToArray(_useState3, 2),
       user = _useState4[0],
-      setUser = _useState4[1];
+      setUser = _useState4[1]; // Create Axios instance with dynamic headers
+
 
   var http = _axios["default"].create({
-    baseURL: "http://localhost:5000/userAPI",
+    baseURL: 'http://localhost:5001/userAPI',
     headers: {
-      "Content-Type": "multipart/form-data",
-      Authorization: "Bearer ".concat(token)
+      'Content-Type': 'multipart/form-data',
+      Authorization: token ? "Bearer ".concat(token) : ''
     }
-  });
+  }); // Update axios headers whenever the token changes
+
+
+  (0, _react.useEffect)(function () {
+    http.defaults.headers.Authorization = token ? "Bearer ".concat(token) : '';
+  }, [token]); // Handle logout and navigate to home
 
   var logout = function logout() {
     sessionStorage.clear();
     setToken(null);
     setUser(null);
-    navigate("/");
-  }; //  const logout=()=>
-  //  {
-  //   sessionStorage.clear();
-  //   settoken(null);
-  //   setuser(null);
-  //   Navigate('/')
-  //  }
-
+    navigate('/');
+  };
 
   return {
     setToken: saveToken,

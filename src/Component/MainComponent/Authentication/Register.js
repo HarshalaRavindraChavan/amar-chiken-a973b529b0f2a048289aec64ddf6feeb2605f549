@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Modal, Form, Toast } from 'react-bootstrap';
-import Authuser from './Authuser';
+
 import './Register.css';
+import Authuser from './Authuser';
 
 const Register = ({ showregisterModal, handleCloseregister }) => {
   const { http } = Authuser(); // Ensure http is properly initialized
@@ -24,22 +25,25 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
     e.preventDefault();
 
     try {
-      const response = await http.post(
-        `${process.env.REACT_APP_API_URL}user/register`,
-        formData,
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+        const response = await http.post(
+            `${process.env.REACT_APP_API_URL}user/register`,
+            formData,
+            {
+                headers: { 'Content-Type': 'application/json' },
+            }
+        );
 
-      console.log('Register data:', response.data);
-      setError(''); // Clear errors if any
-      setShowToast(true); // Show success toast
+        console.log('Register data:', response.data);
+        setError(''); // Clear errors if any
+        setShowToast(true); // Show success toast
     } catch (err) {
-      console.error('Error:', err);
-      setError(err.response?.data?.message || 'Registration failed.');
+        console.error('Error:', err);
+        // Check if response and data are present
+        const errorMessage = err.response?.data?.message || 'Registration failed. Please try again.';
+        setError(errorMessage); // Set specific error message
     }
-  };
+};
+
 
   return (
     <Modal

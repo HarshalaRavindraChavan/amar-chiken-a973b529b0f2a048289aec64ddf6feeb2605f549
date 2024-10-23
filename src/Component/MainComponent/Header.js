@@ -11,8 +11,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link } from "react-router-dom";
 // import Register from "./Authentigation/Register";
 
-import Login from "./Authentigation/Login";
-import Authuser from "./Authentigation/Authuser";
+// import Login from "./Authentigation/Login";
+import Authuser from "./Authentication/Authuser";
+import Login from "./Authentication/Login";
+
 
 
 const Header = () => {
@@ -34,7 +36,8 @@ const Header = () => {
 
   
   const handleShowLogin = () => {
-    setShowLoginModal(true);  // Open the login modal
+    setShowLoginModal(true); 
+    // alert("added") // Open the login modal
    // Close the account modal
   };
   
