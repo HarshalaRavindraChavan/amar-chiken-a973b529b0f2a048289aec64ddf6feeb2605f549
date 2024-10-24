@@ -53,7 +53,7 @@ input[type=text], input[type=password] {
   .cancelbtn {
     width: auto;
     padding: 10px 18px;
-    background-color: #f44336;
+    background-color: #970707;
   }
   
   /* Center the avatar image inside this container */
@@ -171,7 +171,7 @@ input[type=text], input[type=password] {
 }
 
 .dropdown-trigger:hover {
-  color: #ff6f00;
+  color: #970707;
 }
 
 .dropdown-menu {
@@ -202,8 +202,11 @@ input[type=text], input[type=password] {
 }
 
 .dropdown-menu li:hover a {
-  color: #ff6f00;
+  color: #970707;
 }
+
+
+
 
 
 

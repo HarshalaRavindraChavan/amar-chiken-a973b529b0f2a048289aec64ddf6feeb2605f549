@@ -28,10 +28,11 @@ const Authuser = () => {
 
   const saveToken = (user, token) => {
     sessionStorage.setItem('token', JSON.stringify(token));
-    sessionStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem('user', JSON.stringify(user)); // Save user data
     setToken(token);
     setUser(user);
   };
+  
 
   const [token, setToken] = useState(getToken());
   const [user, setUser] = useState(getUser());

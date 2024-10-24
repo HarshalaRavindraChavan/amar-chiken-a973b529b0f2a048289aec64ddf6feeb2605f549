@@ -34,6 +34,11 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
         );
 
         console.log('Register data:', response.data);
+        alert("register successfully");
+
+
+
+        
         setError(''); // Clear errors if any
         setShowToast(true); // Show success toast
     } catch (err) {
@@ -105,7 +110,7 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
             <div className="floating-label">
               <input
                 style={{ height: '10vh' }}
-                type="email"
+                type="text"
                 name="user_Email"
                 className="form-control"
                 value={formData.user_Email}
@@ -118,7 +123,7 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
             <div className="floating-label">
               <input
                 style={{ height: '10vh' }}
-                type="password"
+                type="text"
                 name="user_Password"
                 className="form-control"
                 value={formData.user_Password}
@@ -129,7 +134,7 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
             </div>
 
             <button type="submit" className="custom-register-btn mt-3">
-              Register
+              Continue
             </button>
           </div>
         </Modal.Body>

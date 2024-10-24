@@ -87,9 +87,11 @@ const Header = () => {
             <button
                 className="btn btn-outline-danger me-2"
                 // onClick={handleShowCity}
+                // onClick={toggleDropdown}
               >
                 <i className="fa-solid fa-card" /> AddCard
               </button>
+              
             </div>&nbsp;
             <div className="d-flex align-items-center">
               {/* City Button */}

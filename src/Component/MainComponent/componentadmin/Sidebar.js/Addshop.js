@@ -28,12 +28,10 @@ const Addshps = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const data = new FormData(); // Create FormData object
-
-    // Append all form fields to FormData
+    const data = new FormData();
+  
     for (const key in formData) {
       if (Array.isArray(formData[key])) {
-        // If it's an array (like shopImages), append each file
         for (let i = 0; i < formData[key].length; i++) {
           data.append(key, formData[key][i]);
         }
@@ -41,23 +39,27 @@ const Addshps = () => {
         data.append(key, formData[key]);
       }
     }
-
-    fetch(
-      `${process.env.REACT_APP_API_URL}user/shops`,
-      formData,
-      {
-          headers: { 'Content-Type': 'application/json' },
-      }
-  )
-      .then((res) => res.json())
+  
+    fetch(`${process.env.REACT_APP_API_URL}/shops`, {
+      method: 'POST',
+      body: data,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data) => {
         console.log(data);
-        alert('added successfully');
+        alert('Added successfully');
       })
       .catch((error) => {
-        console.log("Error", error);
+        console.error('Error:', error);
+        alert(`Error: ${error.message}`);
       });
   };
+  
 
   return (
     <div className="container shopform-container">

@@ -52,7 +52,8 @@ var Authuser = function Authuser() {
 
   var saveToken = function saveToken(user, token) {
     sessionStorage.setItem('token', JSON.stringify(token));
-    sessionStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem('user', JSON.stringify(user)); // Save user data
+
     setToken(token);
     setUser(user);
   };

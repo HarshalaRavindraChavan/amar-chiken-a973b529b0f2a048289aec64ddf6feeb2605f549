@@ -58,7 +58,8 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
       .then((res) => {
         console.log("login otp", res.data);
         if (res.status === 200) {
-          alert("OTP sent successfully!");
+          
+          // alert("OTP sent successfully!");
           setIsOtpSent(true); // Display OTP input field
         } 
         // Below condition doesn't occur ever
@@ -104,8 +105,11 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
       .then((res) => {
         console.log("OTP verification response", res.data);
         if (res.status === 200) {
-          alert("OTP verified successfully!");
+          // alert("OTP verified successfully!");
           navigate("/dash"); // Navigate to dashboard
+          // Assuming res.data includes user info
+ 
+  navigate("/dash"); // Navigate to dashboard
         } else {
           toast.error(res.data.message || "OTP verification failed");
         }
@@ -126,11 +130,16 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
         onHide={handleCloseLogin}
         dialogClassName="custom-modal-right"
       >
-        <Modal.Header className="d-flex align-items-center justify-content-between">
-          <Modal.Title className="mx-auto">Login</Modal.Title>
-          <Button variant="close" onClick={handleCloseLogin}></Button>
-        </Modal.Header>
-
+         <button
+        type="button"
+        className="btn-close"
+        onClick={handleCloseLogin}
+        style={{ marginLeft: '30px' }}
+      ></button>
+         {/* <Button variant="close" onClick={} ></Button> */}
+         <Modal.Header className="d-flex justify-content-between align-items-center">
+        <Modal.Title className="mx-auto">Login</Modal.Title>
+      </Modal.Header>
         <Form onSubmit={handleFormSubmit}>
           <Modal.Body>
             {/* Register Link */}
@@ -150,14 +159,19 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
 
             {/* Phone Number Input */}
             <div className="container">
+            <div className="floating-label">
               <input
+              style={{ height: '10vh' }}
                 className="form-control"
                 type="text"
-                placeholder="Phone Number"
+                // placeholder="Phone Number"
                 name="user_phoneno"
                 value={loginData.user_phoneno}
                 onChange={handleInputChange}
               />
+                <label>Phone Number</label>
+              </div>
+            
             </div>
 
             {register && (

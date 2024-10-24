@@ -25,10 +25,12 @@ const Tableshop = () => {
   useEffect(() => {
     const fetchShopData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/shops');
+        const response = await fetch( `${process.env.REACT_APP_API_URL}/shops`);
         const result = await response.json();
         if (response.ok) {
           setShopData(result.data); // Update state with fetched shop data
+          console.log(response.data);
+          
         } else {
           console.error('Error fetching shop data:', result.message);
         }
