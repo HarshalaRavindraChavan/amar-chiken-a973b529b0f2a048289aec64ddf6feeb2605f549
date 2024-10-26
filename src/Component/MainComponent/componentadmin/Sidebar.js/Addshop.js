@@ -12,7 +12,7 @@ const Addshps = () => {
     pincode: '',
     mobileNumber: '',
     emailAddress: '',
-    shopImages: [] // Array to store images
+    // shopImages: [] // Array to store images
   });
 
   console.log(formData);
