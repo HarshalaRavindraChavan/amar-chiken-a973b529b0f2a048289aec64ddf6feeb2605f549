@@ -53,7 +53,7 @@ input[type=text], input[type=password] {
   .cancelbtn {
     width: auto;
     padding: 10px 18px;
-    background-color: #970707;
+    background-color: #9A292F;
   }
   
   /* Center the avatar image inside this container */
@@ -171,7 +171,7 @@ input[type=text], input[type=password] {
 }
 
 .dropdown-trigger:hover {
-  color: #970707;
+  color: #9A292F;
 }
 
 .dropdown-menu {
@@ -202,13 +202,60 @@ input[type=text], input[type=password] {
 }
 
 .dropdown-menu li:hover a {
-  color: #970707;
+  color: #9A292F;
 }
 
 
 
 
 
+/* threee button css */
+/* Container and link styling */
+.custom-nav .nav-link {
+  color: #9A292F; /* Bootstrap's danger color */
+  /* font-weight: bold; */
+  text-decoration: none;
+  margin-right: 2.5rem; /* Increased margin for more spacing */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s;
+}
 
+.custom-nav .nav-link:hover {
+  color: #c9302c; /* Darker shade on hover */
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem 0;
+  min-width: 150px;
+  z-index: 1000;
+  border-radius: 5px;
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-menu .dropdown-item {
+  padding: 0.5rem 1rem;
+  color: #333;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #f5f5f5;
+  color: #d9534f;
+}
 
 

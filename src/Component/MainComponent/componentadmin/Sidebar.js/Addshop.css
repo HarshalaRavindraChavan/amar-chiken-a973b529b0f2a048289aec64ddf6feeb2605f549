@@ -33,7 +33,7 @@
   }
   
   .submit-button {
-    width: 50%;
+    width: 20%;
     padding: 12px;
     background-color: #990b0b;
     color: #fff;
@@ -43,7 +43,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     align-items: center;
-    margin-left: 23%;
+    margin-left: 40%;
   }
   
   .submit-button:hover {
@@ -64,3 +64,11 @@
       font-size: 14px;
     }
   }
+  /* File Input */
+.form-control-file {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}

@@ -1,105 +1,90 @@
-.custom-modal-right {
-    position: fixed;
-    top: 0;
-    right: 0;
-    margin: 0;
-    height: 100vh;
-    width: 90%; /* Adjust width as per your needs */
-    max-width: 500px;
-  }
-  
-  .custom-modal-right .modal-content {
-    height: 100%;
-    border-radius: 0;
-    overflow-y: auto;
-  }
-  
-  .custom-login-btn {
-    width: 100%; /* Full width button */
-    height: 50px; /* Set button height */
-    background-color: #92071e; /* Set the button background color (Bootstrap's primary color) */
-    color: white; /* Set the text color to white */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Add rounded corners */
-    font-size: 16px; /* Set font size */
-    font-weight: bold; /* Make the text bold */
-    cursor: pointer; /* Change cursor to pointer */
-    border-radius: 20px;
+/* General Modal Styling */
+.custom-modal-right .modal-content {
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.custom-register-btn {
-    width: 100%; /* Full width button */
-    height: 50px; /* Set button height */
-    background-color: #92071e; /* Set the button background color (Bootstrap's primary color) */
-    color: white; /* Set the text color to white */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Add rounded corners */
-    font-size: 16px; /* Set font size */
-    font-weight: bold; /* Make the text bold */
-    cursor: pointer; /* Change cursor to pointer */
-    border-radius: 20px;
+.btn-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.2rem;
 }
 
-.custom-login-btn:hover {
-    background-color: #92071e; /* Darken the background color on hover */
-}
-.text-black {
-    color: black;
-}
-
-.text-red {
-    color:#3c59c1;
+/* Title Centered */
+.modal-title {
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: 500;
 }
 
+/* Register Link Styling */
+.create-account-link {
+  color: #d9534f;
+  font-weight: bold;
+  cursor: pointer;
+}
 
+.create-account-link:hover {
+  text-decoration: underline;
+}
 
+/* Floating Label for Inputs */
+.floating-label {
+  position: relative;
+}
 
+.floating-label input {
+  border: 1px solid #ddd;
+  padding: 1.5rem 1rem 0.5rem;
+  border-radius: 5px;
+  outline: none;
+}
 
+.floating-label label {
+  position: absolute;
+  top: 10px;
+  left: 1rem;
+  font-size: 0.9rem;
+  color: #888;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
 
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 0.8rem;
+  font-size: 0.8rem;
+  color: #333;
+  background-color: white;
+  padding: 0 0.2rem;
+}
 
+/* OTP Input */
+.otp-input {
+  text-align: center;
+  width: 50%;
+  margin: auto;
+}
 
+/* Button Styling */
+.custom-login-btn,
+.custom-register-btn,
+.verify-otp-btn {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  background-color: #9A292F;
+  color: white;
+  border: none;
+}
 
-
-
-
-/* .container {
-    margin: 20px;
-  } */
-  
-  .floating-label {
-    position: relative;
-    margin-bottom: 20px;
-  }
-  
-  
-  
-  .floating-label label {
-    position: absolute;
-    top: 18px;
-    left: 12px;
-    color: #aaa;
-    font-size: 16px;
-    /* font-style: italic; */
-    font-weight: 4px;
-    transition: 0.3s ease;
-    pointer-events: none;
-  }
-  
-  /* Move label up when input is focused or has value */
-  .floating-label input:focus + label,
-  .floating-label input:not(:placeholder-shown) + label {
-    top: -8px;
-    left: 10px;
-    font-size: 12px;
-    color: #0c0d0c;
-    background: white;
-    padding: 0 4px;
-    /* height: 30vh; */
-  }
-  
-  /* Change border color on focus */
-  .floating-label input:focus {
-    /* border-color: #383636; */
-    
-  }
-  
+.custom-login-btn:hover,
+.custom-register-btn:hover,
+.verify-otp-btn:hover {
+  background-color: #9A292F;
+}

@@ -20,40 +20,39 @@ const Home = () => {
     {
       img: "https://cdn.britannica.com/94/151894-050-F72A5317/Brown-eggs.jpg",
       title: "Egg",
-    //   description: "Description for Product 1",
+      //   description: "Description for Product 1",
     },
     {
       img: "https://cdn4.volusion.store/etwvu-tkhop/v/vspfiles/photos/420-2.jpg",
       title: "Chinken Wing",
-    //   description: "Description for Product 2",
+      //   description: "Description for Product 2",
     },
     {
       img: "https://i0.wp.com/www.thegoodeatsdiner.com/wp-content/uploads/2020/08/28_chicken_wings_jumbo.jpg?fit=1000%2C736&ssl=1",
       title: "Boneless Chinken",
-    //   description: "Description for Product 3",
+      //   description: "Description for Product 3",
     },
     {
       img: "https://fryit.co/wp-content/uploads/2023/04/thawed-chicken-wings_01-mcw.jpg",
       title: "Chinken Curry",
-    //   description: "Description for Product 4",
+      //   description: "Description for Product 4",
     },
     {
       img: "https://www.inspiredtaste.net/wp-content/uploads/2023/08/Simple-Whole-Roasted-Recipe-Video.jpg",
       title: "Chinken",
-    //   description: "Description for Product 5",
+      //   description: "Description for Product 5",
     },
     {
       img: "https://akm-img-a-in.tosshub.com/indiatoday/fish-story-647_120617055032.jpg?VersionId=8lgq8R3m73XTGRESTwi9DtI8HKHhsF6K",
       title: "Fish",
-    //   description: "Description for Product 6",
+      //   description: "Description for Product 6",
     },
     {
       img: "https://media.licdn.com/dms/image/C5612AQHR3R8uD3j21Q/article-cover_image-shrink_600_2000/0/1597008473365?e=2147483647&v=beta&t=AEBARVD2jgRvtbEz_6c1YTxGWLkuR193E3U-BPlsXCo",
       title: "Mutton",
-    //   description: "Description for Product 7",
+      //   description: "Description for Product 7",
     },
   ];
-
 
   const shopsData = [
     {
@@ -63,7 +62,7 @@ const Home = () => {
       address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
       pincode: "ZB53S7H",
       availability: { serviceAvailable: true, serviceNotAvailable: false },
-      reviews: 31
+      reviews: 31,
     },
     {
       img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
@@ -72,7 +71,7 @@ const Home = () => {
       address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
       pincode: "ZB53S7H",
       availability: { serviceAvailable: true, serviceNotAvailable: false },
-      reviews: 31
+      reviews: 31,
     },
     {
       img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
@@ -81,7 +80,7 @@ const Home = () => {
       address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
       pincode: "ZB53S7H",
       availability: { serviceAvailable: true, serviceNotAvailable: false },
-      reviews: 31
+      reviews: 31,
     },
     {
       img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
@@ -90,7 +89,7 @@ const Home = () => {
       address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
       pincode: "ZB53S7H",
       availability: { serviceAvailable: true, serviceNotAvailable: false },
-      reviews: 31
+      reviews: 31,
     },
     {
       img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
@@ -99,7 +98,7 @@ const Home = () => {
       address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
       pincode: "ZB53S7H",
       availability: { serviceAvailable: true, serviceNotAvailable: false },
-      reviews: 31
+      reviews: 31,
     },
     {
       img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
@@ -108,7 +107,7 @@ const Home = () => {
       address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
       pincode: "ZB53S7H",
       availability: { serviceAvailable: true, serviceNotAvailable: false },
-      reviews: 31
+      reviews: 31,
     },
     {
       img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
@@ -117,7 +116,7 @@ const Home = () => {
       address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
       pincode: "ZB53S7H",
       availability: { serviceAvailable: true, serviceNotAvailable: false },
-      reviews: 31
+      reviews: 31,
     },
     {
       img: "https://img.freepik.com/premium-vector/colorful-fried-chicken-shop-cartoon-vector-design_1080480-126900.jpg?semt=ais_hybrid",
@@ -126,7 +125,7 @@ const Home = () => {
       address: "Balaji park, mhada colony, Kolhapur, Maharashtra",
       pincode: "ZB53S7H",
       availability: { serviceAvailable: true, serviceNotAvailable: false },
-      reviews: 31
+      reviews: 31,
     },
     // Add other shops if necessary
   ];
@@ -151,43 +150,43 @@ const Home = () => {
         </Slider>
       </div>
       <div className="container mt-5">
-  <Link to="/dash">
-    <h2 className="text-center" style={{ color: "#9A292F" }}>
-      Shops To Explore / Admin / Shop Admin
-    </h2>
-  </Link>
-  <div className="row">
-    {shopsData.map((shop, index) => (
-      <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={index}>
-        <Link to={`/shop/${shop.name}`}>
-          <div className="card shop-card shadow position-relative">
-            <img
-              src={shop.img}
-              alt={shop.name}
-              className="card-img-top"
-            />
-            <div className="card-body text-center">
-              <h5 className="card-title">{shop.name}</h5>
-              <div className="rating">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <i
-                    key={i}
-                    className={`fas fa-star ${
-                      i < shop.rating ? "text-gold" : "text-secondary"
-                    }`}
-                  />
-                ))}
-              </div>
-              <p className="price">${shop.price}</p> {/* Display the price */}
-            </div>
-          </div>
+        <Link to="/dash" className="no-underline">
+          <h2 className="text-center" style={{ color: "#9A292F" }}>
+            Shops To Explore - Admin - Shop Admin
+          </h2>
         </Link>
+
+        <div className="row">
+          {shopsData.map((shop, index) => (
+            <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" key={index}>
+              <Link to={`/shop/${shop.name}`}>
+                <div className="card shop-card shadow position-relative">
+                  <img
+                    src={shop.img}
+                    alt={shop.name}
+                    className="card-img-top"
+                  />
+                  <div className="card-body text-center">
+                    <h5 className="card-title">{shop.name}</h5>
+                    <div className="rating">
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <i
+                          key={i}
+                          className={`fas fa-star ${
+                            i < shop.rating ? "text-gold" : "text-secondary"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <p className="price">${shop.price}</p>{" "}
+                    {/* Display the price */}
+                  </div>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
-    ))}
-  </div>
-</div>
-
-
     </div>
   );
 };

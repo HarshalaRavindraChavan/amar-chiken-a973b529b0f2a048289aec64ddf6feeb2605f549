@@ -130,7 +130,7 @@ const Register = ({ showregisterModal, handleCloseregister }) => {
                 onChange={handleInputChange}
                 required
               />
-              <label>Password</label>
+              <label>Pincode</label>
             </div>
 
             <button type="submit" className="custom-register-btn mt-3">

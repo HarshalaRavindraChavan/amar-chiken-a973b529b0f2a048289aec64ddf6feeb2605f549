@@ -63,80 +63,69 @@ const Addshps = () => {
 
   return (
     <div className="container shopform-container">
-      <h2 className="form-title">Shop Information</h2>
-      <form className="shopform" encType="multipart/form-data" onSubmit={onSubmit}>
-        <div className="row">
-          <div className="form-group col-md-6 custom-input">
-            <input
-              className="form-control triangle-input"
-              type="text"
-              name="shopName"
-              placeholder="Shop Name"
-              onChange={onInputChange}
-            />
-          </div>
-          <div className="form-group col-md-6 custom-input">
-            <input
-              className="form-control triangle-input"
-              type="text"
-              name="shopLocation"
-              placeholder="Shop Location"
-              onChange={onInputChange}
-            />
-          </div>
-          <div className="form-group col-md-6 custom-input">
-            <input
-              className="form-control triangle-input"
-              type="text"
-              name="address"
-              placeholder="Address"
-              onChange={onInputChange}
-            />
-          </div>
-          <div className="form-group col-md-6 custom-input">
-            <input
-              className="form-control triangle-input"
-              type="text"
-              name="pincode"
-              placeholder="Pincode"
-              onChange={onInputChange}
-            />
-          </div>
-          <div className="form-group col-md-6 custom-input">
-            <input
-              className="form-control triangle-input"
-              type="text"
-              name="mobileNumber"
-              placeholder="Mobile No"
-              onChange={onInputChange}
-            />
-          </div>
-          <div className="form-group col-md-6 custom-input">
-            <input
-              className="form-control triangle-input"
-              type="email"
-              name="emailAddress"
-              placeholder="Email Address"
-              onChange={onInputChange}
-            />
-          </div>
-          <div className="form-group col-md-6 custom-input">
-            <label>Shop Images</label>
-            <input
-              type="file"
-              id="shopImages"
-              name="shopImages"
-              multiple
-              className="form-control-file"
-              onChange={onInputChange}
-            />
-          </div>
+    <h2 className="form-title">Shop Information</h2>
+    <div className="shopform">
+      <div className="row">
+        <div className="form-group col-md-6 custom-input">
+          <input
+            className="form-control triangle-input"
+            type="text"
+            placeholder="Shop Name"
+          />
         </div>
-        <button type="submit" className="submit-button">
-          Submit
-        </button>
-      </form>
+        <div className="form-group col-md-6 custom-input">
+          <input
+            className="form-control triangle-input"
+            type="text"
+            placeholder="Shop Location"
+          />
+        </div>
+        <div className="form-group col-md-6 custom-input">
+          <input
+            className="form-control triangle-input"
+            type="text"
+            placeholder="Address"
+          />
+        </div>
+        <div className="form-group col-md-6 custom-input">
+          <input
+            className="form-control triangle-input"
+            type="text"
+            placeholder="Pincode"
+          />
+        </div>
+        <div className="form-group col-md-6 custom-input">
+          <input
+            className="form-control triangle-input"
+            type="text"
+            placeholder="Mobile No"
+          />
+        </div>
+        <div className="form-group col-md-6 custom-input">
+          <input
+            className="form-control triangle-input"
+            type="text"
+            placeholder="Email Address"
+          />
+        </div>
+        <div className="form-group col-12 custom-input">
+        {/* <label className="file-label">Shop Images</label> */}
+        <input
+          type="file"
+          id="shopImages"
+          name="shopImages"
+          multiple
+          className="form-control-file"
+          required
+        />
+      </div>
+      </div>
+      <button type="submit" className="submit-button">
+        Submit
+      </button>
     </div>
+  </div>
+  
   );
 };
 

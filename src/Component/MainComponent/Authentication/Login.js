@@ -123,140 +123,142 @@ const Login = ({ showLoginModal, handleCloseLogin }) => {
   const handleCloseRegister = () => setShowRegisterModal(false);
 
   return (
-    <div>
-      {/* Login Modal */}
-      <Modal
-        show={showLoginModal}
-        onHide={handleCloseLogin}
-        dialogClassName="custom-modal-right"
-      >
-         <button
+    <Modal
+      show={showLoginModal}
+      onHide={handleCloseLogin}
+      dialogClassName="custom-modal-right"
+      centered
+    >
+      {/* Close Button */}
+      <button
         type="button"
         className="btn-close"
         onClick={handleCloseLogin}
-        style={{ marginLeft: '30px' }}
+        style={{ marginLeft: "30px" }}
       ></button>
-         {/* <Button variant="close" onClick={} ></Button> */}
-         <Modal.Header className="d-flex justify-content-between align-items-center">
-        <Modal.Title className="mx-auto">Login</Modal.Title>
-      </Modal.Header>
-        <Form onSubmit={handleFormSubmit}>
-          <Modal.Body>
-            {/* Register Link */}
-            <div className="mt-3">
-              <span className="text-black">or </span>
-              <span
-                onClick={() => {
-                  handleCloseLogin();
-                  setShowRegisterModal(true);
-                }}
-                className="text-red"
-                style={{ cursor: "pointer" }}
-              >
-                Create an account
-              </span>
-            </div>
 
-            {/* Phone Number Input */}
-            <div className="container">
+      {/* Header */}
+      <Modal.Header className="d-flex justify-content-center align-items-center">
+        <Modal.Title>Login</Modal.Title>
+      </Modal.Header>
+
+      {/* Form */}
+      <Form onSubmit={handleFormSubmit}>
+        <Modal.Body>
+          {/* Register Link */}
+          <div className="mt-3 text-center">
+            <span className="text-muted">or </span>
+            <span
+              onClick={() => {
+                handleCloseLogin();
+                setShowRegisterModal(true);
+              }}
+              className="text-red create-account-link"
+            >
+              Create an account
+            </span>
+          </div>
+
+          {/* Phone Number Input */}
+          <div className="container mt-3">
+          {/* <label>Phone Number</label> */}
             <div className="floating-label">
+              
               <input
-              style={{ height: '10vh' }}
                 className="form-control"
-                type="text"
-                // placeholder="Phone Number"
+                // type="text"
+                placeholder="Enter Your Mobile Number"
                 name="user_phoneno"
                 value={loginData.user_phoneno}
                 onChange={handleInputChange}
+                style={{ height: "7vh" }}
+                required
               />
-                <label>Phone Number</label>
-              </div>
-            
+              
             </div>
+          </div>
 
-            {register && (
-              <div className="container mt-3">
-                <div className="form-group">
-                  <input
+          {/* Conditional Fields for Register */}
+          {register && (
+            <div className="container mt-3">
+              <Form.Group className="form-group">
+                <Form.Control
+                  type="text"
+                  name="user_Name"
+                  placeholder="Name"
+                  value={loginData.user_Name}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="form-group mt-2">
+                <Form.Control
+                  type="email"
+                  name="user_Email"
+                  placeholder="Email"
+                  value={loginData.user_Email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="form-group mt-2">
+                <Form.Control
+                  type="password"
+                  name="user_Password"
+                  placeholder="Password"
+                  value={loginData.user_Password}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Form.Group>
+
+              <Button type="submit" className="custom-register-btn mt-3">
+                Continue
+              </Button>
+            </div>
+          )}
+
+          {/* Conditional Fields for OTP Verification */}
+          {!register && (
+            <>
+              {isOtpSent ? (
+                <div className="mt-3 text-center">
+                  <Form.Control
+                    className="form-control"
                     type="text"
-                    name="user_Name"
-                    className="form-control"
-                    placeholder="Name"
-                    value={loginData.user_Name}
-                    onChange={handleInputChange}
+                    placeholder="Enter OTP"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    style={{ height: "7vh" }}
+                    required
                   />
+                  <Button
+                    type="button"
+                    className="btn btn-danger mt-3 verify-otp-btn"
+                    onClick={verifyOtp}
+                  >
+                    Verify OTP
+                  </Button>
                 </div>
-
-                <div className="form-group">
-                  <input
-                    type="text"
-                    name="user_Email"
-                    className="form-control"
-                    placeholder="Email"
-                    value={loginData.user_Email}
-                    onChange={handleInputChange}
-                  />
+              ) : (
+                <div className="container mt-3">
+                  <Button
+                    type="submit"
+                    className="custom-login-btn"
+                    // className="form-control"
+                    onClick={() => setIsOtpSent(true)}
+                  >
+                    Continue
+                  </Button>
                 </div>
-
-                <div className="form-group">
-                  <input
-                    type="password"
-                    name="user_Password"
-                    className="form-control"
-                    placeholder="Password"
-                    value={loginData.user_Password}
-                    onChange={handleInputChange}
-                  />
-                </div>
-
-                <button type="submit" className="custom-register-btn mt-3">
-                  Continue
-                </button>
-              </div>
-            )}
-
-            {/* Login Button */}
-            {!register && (
-              <>
-                {isOtpSent ? (
-                  // OTP Input Section
-                  <div className="mt-3">
-                    <input
-                      className="form-control otp-input"
-                      type="text"
-                      placeholder="Enter OTP"
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
-                      maxLength="6"
-                    />
-                    <button
-                      type="button"
-                      className="btn btn-danger mt-3"
-                      onClick={verifyOtp}
-                    >
-                      Verify OTP
-                    </button>
-                  </div>
-                ) : (
-                  // Login Button Section
-                  <div className="container mt-2">
-                    <button type="submit" className="custom-login-btn mt-3">
-                      Continue
-                    </button>
-                  </div>
-                )}
-              </>
-            )}
-          </Modal.Body>
-        </Form>
-      </Modal>
-
-      {/* Registration Modal */}
-      <Register
-        showregisterModal={showRegisterModal}
-        handleCloseregister={handleCloseRegister}
-      />
-    </div>
+              )}
+            </>
+          )}
+        </Modal.Body>
+      </Form>
+    </Modal>
   );
 };
 
