@@ -81,16 +81,21 @@ const Sidebar = () => {
         <ListItem button>
           <ListItemIcon>
             {/* <AddShoppingCartIcon /> */}
+          
           </ListItemIcon>
+
+          <Link to='/addproduct'style={{ textDecoration: 'none', color: 'inherit' }}>
           <ListItemText primary="Add Product" />
+          </Link>
         </ListItem>
         <ListItem button>
           <ListItemIcon>
             {/* <AddShoppingCartIcon /> */}
           </ListItemIcon>
-          {/* <Link to="/shopadd" style={{ textDecoration: 'none', color: 'inherit' }}> */}
-            <ListItemText primary="Add TO Shop" />
-          {/* </Link> */}
+        
+          <Link to="/shopadd" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItemText primary="Add To Shop" />
+          </Link>
         </ListItem>
 
         <ListItem button>

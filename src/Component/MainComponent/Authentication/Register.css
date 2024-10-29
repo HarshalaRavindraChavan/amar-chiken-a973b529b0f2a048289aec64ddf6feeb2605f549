@@ -20,15 +20,15 @@
 }
 
 /* Register Link Styling */
-.create-account-link {
+/* .create-account-link {
   color: #d9534f;
   font-weight: bold;
   cursor: pointer;
-}
+} */
 
-.create-account-link:hover {
+/* .create-account-link:hover {
   text-decoration: underline;
-}
+} */
 
 /* Floating Label for Inputs */
 .floating-label {

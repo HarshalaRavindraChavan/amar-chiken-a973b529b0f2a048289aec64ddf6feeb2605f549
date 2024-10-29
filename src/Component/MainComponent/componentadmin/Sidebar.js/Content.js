@@ -87,7 +87,7 @@ const Content = () => {
           <Paper sx={{ padding: 3, display: 'flex', alignItems: 'center', bgcolor: '#f5f5f5', borderRadius: 2 }}>
             <AccountCircleIcon sx={{ fontSize: 40, color: '#851919', marginRight: 2 }} />
             <div>
-              <Typography variant="h6">Add Product</Typography>
+             <Link to='/addproduct' style={{ textDecoration: 'none', color: 'inherit' }}><Typography variant="h6">Add Product</Typography></Link> 
               <Typography variant="body2">Manage your add product.</Typography>
             </div>
           </Paper>

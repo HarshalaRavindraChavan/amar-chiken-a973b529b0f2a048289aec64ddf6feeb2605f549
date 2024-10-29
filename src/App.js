@@ -10,6 +10,7 @@ import Shoplist from './Component/MainComponent/Shoplist';
 import Shoporder from './Component/MainComponent/Shopordercomponent/Shoporder';
 import Addshop from './Component/MainComponent/componentadmin/Sidebar.js/Addshop';
 import Tableshop from './Component/MainComponent/componentadmin/Sidebar.js/Tableshop';
+import Productadd from './Component/MainComponent/componentadmin/Productadd';
 
 
 
@@ -29,6 +30,7 @@ function App() {
         {/* <Route path="/shop/:shopName" element={<Master Rcf={Shoporder}/>} /> */}
         <Route path="/product/:productName" element={<Master Rcf={Shoporder}/>} />
         <Route path='/shoptale' element={<Master Rcf={Tableshop}/>}/>
+        <Route path='/addproduct' element={<Master Rcf={Productadd}/>}/>
       </Routes>
       </BrowserRouter>
     </div>
