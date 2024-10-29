@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Alert } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -37,6 +37,10 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
+
+  useEffect(() => {
+
+  }, [token]);
 
   return (
     <div>
@@ -138,7 +142,7 @@ const Header = () => {
                 ) : (
                   // Dropdown Trigger with User Name
                   <div className="dropdown-trigger" onClick={toggleDropdown}>
-                    <i className="fa fa-user me-1"></i> {user?.name || "User"}
+                    <i className="fa fa-user me-1"></i> {user?.user_Name || "User"}
                   </div>
                 )}
 
@@ -158,7 +162,7 @@ const Header = () => {
                         <Link to="/favourites">Favourites</Link>
                       </li>
                       <li>
-                        <Link to="/logout">Logout</Link>
+                        <Link to="/" onClick={logout}>logout</Link>
                       </li>
                     </ul>
                   </div>
