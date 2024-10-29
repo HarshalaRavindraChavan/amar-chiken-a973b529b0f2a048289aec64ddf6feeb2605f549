@@ -1,71 +1,58 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react'
+import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-
 const Authuser = () => {
-  const navigate = useNavigate();
 
-  // Helper functions for session management
-  const getToken = () => {
-    try {
-      const tokenString = sessionStorage.getItem('token');
-      return tokenString ? JSON.parse(tokenString) : null;
-    } catch (error) {
-      console.error('Failed to parse token:', error);
-      return null;
-    }
-  };
-
-  const getUser = () => {
-    try {
-      const userString = sessionStorage.getItem('user');
-      return userString ? JSON.parse(userString) : null;
-    } catch (error) {
-      console.error('Failed to parse user:', error);
-      return null;
-    }
-  };
-
-  const saveToken = (user, token) => {
-    sessionStorage.setItem('token', JSON.stringify(token));
-    sessionStorage.setItem('user', JSON.stringify(user)); // Save user data
-    setToken(token);
-    setUser(user);
-  };
+    const navigate = useNavigate();
+    const getToken = () => {
+      const tokenString = sessionStorage.getItem("token");
+      const userToken = JSON.parse(tokenString);
+      return userToken;
+    };
   
+    const getUser = () => {
+      const userString = JSON.parse(sessionStorage.getItem("user"));
+      return userString;
+    };
 
-  const [token, setToken] = useState(getToken());
-  const [user, setUser] = useState(getUser());
+    const saveToken = (user, token) => {
+        sessionStorage.setItem("token", JSON.stringify(token));
+        sessionStorage.setItem("user", JSON.stringify(user));
+      };
 
-  // Create Axios instance with dynamic headers
-  const http = axios.create({
-    baseURL: 'http://localhost:5001/userAPI',
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      Authorization: token ? `Bearer ${token}` : '',
-    },
-  });
+    const [token,setToken] = useState(getToken());
+  const [user,setUser] = useState(getUser());
+    const http = axios.create({
+       
+        baseURL: "http://localhost:5001/userAPI",
+        
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const logout = () => {
+        sessionStorage.clear();
+        setToken(null);
+        setUser(null);
+        navigate("/");
+    
+      };
+      
+  //  const logout=()=>
+  //  {
+  //   sessionStorage.clear();
+  //   settoken(null);
+  //   setuser(null);
+  //   Navigate('/')
+  //  }
+      return {
+        setToken: saveToken,
+        token,
+        user,
+        http,
+        logout,
+      };
+}
 
-  // Update axios headers whenever the token changes
-  useEffect(() => {
-    http.defaults.headers.Authorization = token ? `Bearer ${token}` : '';
-  }, [token]);
-
-  // Handle logout and navigate to home
-  const logout = () => {
-    sessionStorage.clear();
-    setToken(null);
-    setUser(null);
-    navigate('/');
-  };
-
-  return {
-    setToken: saveToken,
-    token,
-    user,
-    http,
-    logout,
-  };
-};
-
-export default Authuser;
+export default Authuser
